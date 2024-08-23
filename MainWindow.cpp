@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "qboxlayout.h"
 #include "qglobal.h"
+#include "qlocale.h"
 #include "qobjectdefs.h"
 #include "qpushbutton.h"
 #include "qwidget.h"
@@ -41,11 +42,8 @@ MainWindow::MainWindow()
     setupEditorPanel();
     setupElementsPanel();
 
-    /*qssEditor->setLayout(h_ly);*/
-    /*mainLayout->addWidget(qssEditor);*/
     setCentralWidget(central_widget);
     centralWidget()->setLayout(mainLayout);
-    /*setLayout(mainLayout);*/
 
     setTexts();
 }
@@ -93,6 +91,8 @@ void MainWindow::setupElementsPanel()
     /*QSlider * */
     testProgressBar = new QProgressBar(elementsPanel);
     testSpinBox = new QSpinBox(elementsPanel);
+    testDial = new QDial(elementsPanel);
+    testCalendar = new QCalendarWidget(elementsPanel);
     /*QScrollBar * test*/
     // QScrollArea
     // QToolButton
@@ -113,7 +113,6 @@ void MainWindow::setupElementsPanel()
     // QToolBar
     // QStatusBar
     // QCalendarWidget
-    // QDial
     // QMessageBox
     // QSplitter
     // QPlainTextEdit
@@ -129,6 +128,8 @@ void MainWindow::setupElementsPanel()
     v_ly->addWidget(testComboBox);
     v_ly->addWidget(testProgressBar);
     v_ly->addWidget(testSpinBox);
+    v_ly->addWidget(testDial);
+    v_ly->addWidget(testCalendar);
 
     elementsPanel->setLayout(v_ly);
 }

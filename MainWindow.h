@@ -1,3 +1,4 @@
+#include "qlocale.h"
 #include "qobjectdefs.h"
 #include <QCheckBox>
 #include <QComboBox>
@@ -9,6 +10,8 @@
 #include <QRadioButton>
 #include <QSpinBox>
 #include <QTextEdit>
+#include <QDial>
+#include <QCalendarWidget>
 
 class MainWindow : public QMainWindow
 {
@@ -36,6 +39,8 @@ protected:
     /*QSlider * */
     QProgressBar *testProgressBar;
     QSpinBox *testSpinBox;
+    QDial * testDial;
+    QCalendarWidget * testCalendar;
 
     void setTexts();
     void setupEditorPanel();
