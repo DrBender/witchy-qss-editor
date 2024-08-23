@@ -5,10 +5,12 @@
 #include "qpushbutton.h"
 #include "qwidget.h"
 #include <QCheckBox>
+#include <QDebug>
+#include <QFileDialog>
 #include <QFrame>
 #include <QPushButton>
 #include <QVBoxLayout>
-#include <QDebug>
+#include <QMessageBox>
 
 MainWindow::MainWindow()
 {
@@ -56,10 +58,10 @@ void MainWindow::setupEditorPanel()
 
     QWidget *pbPanel = new QWidget(editorPanel);
     pbPanel->setLayout(new QHBoxLayout(editorPanel));
-    QPushButton * open = new QPushButton(editorPanel);
+    QPushButton *open = new QPushButton(editorPanel);
     QPushButton *save = new QPushButton(editorPanel);
     QPushButton *apply_style = new QPushButton(editorPanel);
-    
+
     open->setText(tr("Open"));
     save->setText(tr("Save"));
     apply_style->setText(tr("Apply Style"));
@@ -145,13 +147,57 @@ void MainWindow::setTexts()
     /*testSpinBox->set;*/
 }
 
-void MainWindow::openQssFile()
-{
-    qDebug() << "open Qss File";
+void MainWindow::openQssFile() { 
+    qDebug() << "open Qss File"; 
+    QString fileName = QFileDialog::getOpenFileName(this, 
+                        "Open file", 
+                        "", 
+                        "Qss Files (*.qss);;All Files (*)");
+
+    if (fileName.isEmpty()) {
+        return; 
+    }
+
+    QFile file(fileName);
+
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QMessageBox::warning(this, "Error", "Couldn't open file for reading.");
+        return;
+    }
+
+    QTextStream in(&file);
+    QString fileContent = in.readAll();
+
+    file.close();
+    
+    qssEditor->setText(fileContent);
 }
 void MainWindow::saveQssFile()
 {
     qDebug() << "save Qss File";
+    // QFileDialog dialog(this);
+    // dialog.setNameFilter(tr("QSS (*.qss)"));
+    QString fileName = QFileDialog::getSaveFileName(this, 
+                        "Save file", 
+                        "", 
+                        "Qss Files (*.qss);;All Files (*)");
+
+    if (fileName.isEmpty()) {
+        return; 
+    }
+
+    QFile file(fileName);
+
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QMessageBox::warning(this, "Error", "Couldn't open file for writing.");
+        return;
+    }
+
+    QTextStream out(&file);
+    QString text = qssEditor->toPlainText();
+    out << text;
+
+    file.close();
 }
 
 void MainWindow::applyQssFile()
