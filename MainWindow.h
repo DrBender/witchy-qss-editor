@@ -1,7 +1,9 @@
-#include "qlocale.h"
+#include "QssTextEditor.h"
 #include "qobjectdefs.h"
+#include <QCalendarWidget>
 #include <QCheckBox>
 #include <QComboBox>
+#include <QDial>
 #include <QLabel>
 #include <QLineEdit>
 #include <QMainWindow>
@@ -10,12 +12,12 @@
 #include <QRadioButton>
 #include <QSpinBox>
 #include <QTextEdit>
-#include <QDial>
-#include <QCalendarWidget>
+#include "QssWidgetsPreview.h"
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
 public:
     MainWindow();
     ~MainWindow();
@@ -23,24 +25,12 @@ public slots:
     void openQssFile();
     void saveQssFile();
     void applyQssFile();
+
 protected:
     QWidget *editorPanel;
-    QWidget *elementsPanel;
+    QssWidgetsPreview *elementsPanel;
 
-    QTextEdit *qssEditor;
-
-    QPushButton *testButton;
-    QCheckBox *testCheckBox_1;
-    QLabel *testLabel;
-    QLineEdit *testLineEdit;
-    QTextEdit *testTextEdit;
-    QRadioButton *testRadioButton_1;
-    QComboBox *testComboBox;
-    /*QSlider * */
-    QProgressBar *testProgressBar;
-    QSpinBox *testSpinBox;
-    QDial * testDial;
-    QCalendarWidget * testCalendar;
+    QssTextEditor *editor;
 
     void setTexts();
     void setupEditorPanel();

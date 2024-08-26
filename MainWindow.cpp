@@ -28,7 +28,7 @@ MainWindow::MainWindow()
     h_ly->setSpacing(20);
     h_ly->setContentsMargins(0, 0, 0, 0);
     editorPanel = new QWidget(central_widget);
-    elementsPanel = new QWidget(central_widget);
+    elementsPanel = new QssWidgetsPreview(central_widget);
     h_ly->addWidget(editorPanel);
     h_ly->addWidget(elementsPanel);
     background_app->setLayout(h_ly);
@@ -40,7 +40,7 @@ MainWindow::MainWindow()
     mainLayout->setContentsMargins(0, 0, 0, 0);
 
     setupEditorPanel();
-    setupElementsPanel();
+    /*setupElementsPanel();*/
 
     setCentralWidget(central_widget);
     centralWidget()->setLayout(mainLayout);
@@ -52,7 +52,7 @@ MainWindow::~MainWindow() {}
 void MainWindow::setupEditorPanel()
 {
     editorPanel->setLayout(new QVBoxLayout(editorPanel));
-    qssEditor = new QTextEdit(editorPanel);
+    editor = new QssTextEditor(editorPanel);
 
     QWidget *pbPanel = new QWidget(editorPanel);
     pbPanel->setLayout(new QHBoxLayout(editorPanel));
@@ -69,7 +69,7 @@ void MainWindow::setupEditorPanel()
     pbPanel->layout()->addWidget(apply_style);
 
     editorPanel->layout()->addWidget(pbPanel);
-    editorPanel->layout()->addWidget(qssEditor);
+    editorPanel->layout()->addWidget(editor);
 
     connect(open, SIGNAL(clicked()), this, SLOT(openQssFile()));
     connect(save, SIGNAL(clicked()), this, SLOT(saveQssFile()));
@@ -77,75 +77,11 @@ void MainWindow::setupEditorPanel()
 }
 void MainWindow::setupElementsPanel()
 {
-    // Add QT widgets to preview panel
-    QVBoxLayout *v_ly = new QVBoxLayout(elementsPanel);
 
-    testButton = new QPushButton(elementsPanel);
-    testCheckBox_1 = new QCheckBox(elementsPanel);
-    /*QWidget*/
-    testLabel = new QLabel(elementsPanel);
-    testLineEdit = new QLineEdit(elementsPanel);
-    testTextEdit = new QTextEdit(elementsPanel);
-    testRadioButton_1 = new QRadioButton(elementsPanel);
-    testComboBox = new QComboBox(elementsPanel);
-    /*QSlider * */
-    testProgressBar = new QProgressBar(elementsPanel);
-    testSpinBox = new QSpinBox(elementsPanel);
-    testDial = new QDial(elementsPanel);
-    testCalendar = new QCalendarWidget(elementsPanel);
-    /*QScrollBar * test*/
-    // QScrollArea
-    // QToolButton
-    // QMenu
-    // QMenuBar
-    // QTabWidget
-    // QTabBar
-    // QToolTip
-    // QGroupBox
-    // QFrame
-    // QListView
-    // QListWidget
-    // QTreeView
-    // QTreeWidget
-    // QTableView
-    // QTableWidget
-    // QHeaderView
-    // QToolBar
-    // QStatusBar
-    // QCalendarWidget
-    // QMessageBox
-    // QSplitter
-    // QPlainTextEdit
-    // QAbstractItemView
-    // QAbstractButton
-    // QDialogButtonBox
-    v_ly->addWidget(testButton);
-    v_ly->addWidget(testCheckBox_1);
-    v_ly->addWidget(testLabel);
-    v_ly->addWidget(testLineEdit);
-    v_ly->addWidget(testTextEdit);
-    v_ly->addWidget(testRadioButton_1);
-    v_ly->addWidget(testComboBox);
-    v_ly->addWidget(testProgressBar);
-    v_ly->addWidget(testSpinBox);
-    v_ly->addWidget(testDial);
-    v_ly->addWidget(testCalendar);
-
-    elementsPanel->setLayout(v_ly);
 }
 void MainWindow::setTexts()
 {
-    testButton->setText(tr("Test Button"));
-    testCheckBox_1->setText(tr("Test Check Box"));
 
-    testLabel->setText(tr("Test Label"));
-    testLineEdit->setText(tr("Test Line Edit"));
-    testTextEdit->setText(tr("Test Text Edit"));
-    testRadioButton_1->setText(tr("Test Radio Button 1"));
-    /*testComboBox->setText(tr("Test Combo BOx"));*/
-    testProgressBar->setFormat("Test Progress Bar");
-    testProgressBar->setValue(10);
-    /*testSpinBox->set;*/
 }
 
 void MainWindow::openQssFile() { 
@@ -171,7 +107,7 @@ void MainWindow::openQssFile() {
 
     file.close();
     
-    qssEditor->setText(fileContent);
+    editor->setPlainText(fileContent);
 }
 void MainWindow::saveQssFile()
 {
@@ -195,7 +131,7 @@ void MainWindow::saveQssFile()
     }
 
     QTextStream out(&file);
-    QString text = qssEditor->toPlainText();
+    QString text = editor->toPlainText();
     out << text;
 
     file.close();
@@ -204,6 +140,6 @@ void MainWindow::saveQssFile()
 void MainWindow::applyQssFile()
 {
     qDebug() << "Apply Style";
-    QString text = qssEditor->toPlainText();
+    QString text = editor->toPlainText();
     elementsPanel->setStyleSheet(text);
 }
