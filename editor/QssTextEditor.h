@@ -7,6 +7,7 @@
 #include <QPlainTextEdit>
 #include <qt5/QtCore/qobjectdefs.h>
 /*#include "LineNumberArea.h"*/
+#include "SyntaxHighlighter.h"
 
 class QssTextEditor : public QPlainTextEdit
 {
@@ -25,7 +26,7 @@ protected:
 
 private:
     QWidget *lineNumberArea;
-
+    SyntaxHighlighter *highlighter;
 private slots:
     void updateLineNumberAreaWidth(int newBlockCount);
     void highlightCurrentLine();

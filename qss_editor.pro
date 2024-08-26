@@ -18,6 +18,7 @@ SOURCES += \
     MainWindow.cpp \
     preview/QssWidgetsPreview.cpp \
     editor/LineNumberArea.cpp \
+    editor/SyntaxHighlighter.cpp \
     editor/QssTextEditor.cpp 
     
 
@@ -25,6 +26,7 @@ HEADERS += \
     MainWindow.h \
     preview/QssWidgetsPreview.h \
     editor/LineNumberArea.h \
+    editor/SyntaxHighlighter.h \
     editor/QssTextEditor.h 
     
 

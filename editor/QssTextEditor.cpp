@@ -18,6 +18,8 @@ QssTextEditor::QssTextEditor(QWidget *parent) : QPlainTextEdit(parent)
 
     updateLineNumberAreaWidth(0);
     highlightCurrentLine();
+
+    highlighter = new SyntaxHighlighter(this->document());
 }
 
 QssTextEditor::~QssTextEditor() { qDebug() << "Destructor"; }
