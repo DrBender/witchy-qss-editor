@@ -17,12 +17,14 @@ SOURCES += \
     main.cpp \
     MainWindow.cpp \
     preview/QssWidgetsPreview.cpp \
+    editor/LineNumberArea.cpp \
     editor/QssTextEditor.cpp 
     
 
 HEADERS += \
     MainWindow.h \
     preview/QssWidgetsPreview.h \
+    editor/LineNumberArea.h \
     editor/QssTextEditor.h 
     
 

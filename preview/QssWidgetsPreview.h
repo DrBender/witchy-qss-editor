@@ -1,5 +1,9 @@
+#pragma once
+#ifndef QSSWIDGETSPREVIEW_H
+#define QSSWIDGETSPREVIEW_H
 
 #include "qobjectdefs.h"
+
 #include "qwidget.h"
 
 #include <QCalendarWidget>
@@ -39,3 +43,4 @@ protected:
     QDial *testDial;
     QCalendarWidget *testCalendar;
 };
+#endif /* QSSWIDGETSPREVIEW_H */

@@ -1,17 +1,10 @@
+#pragma once
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
+
 #include "QssTextEditor.h"
 #include "qobjectdefs.h"
-#include <QCalendarWidget>
-#include <QCheckBox>
-#include <QComboBox>
-#include <QDial>
-#include <QLabel>
-#include <QLineEdit>
 #include <QMainWindow>
-#include <QProgressBar>
-#include <QPushButton>
-#include <QRadioButton>
-#include <QSpinBox>
-#include <QTextEdit>
 #include "QssWidgetsPreview.h"
 
 class MainWindow : public QMainWindow
@@ -36,3 +29,4 @@ protected:
     void setupEditorPanel();
     void setupElementsPanel();
 };
+#endif
