@@ -6,6 +6,7 @@
 #include <QRegularExpression>
 #include <QSyntaxHighlighter>
 #include <QTextDocument>
+#include "Ast.h"
 
 class SyntaxHighlighter : public QSyntaxHighlighter
 {
@@ -25,6 +26,8 @@ private:
         QTextCharFormat format;
     };
     QVector<HighlightingRule> rules;
+    Parser parser;
+    std::shared_ptr<StyleSheetNode> styleSheet;
 };
 
 #endif
