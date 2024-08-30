@@ -8,6 +8,7 @@
 #include <qt5/QtCore/qobjectdefs.h>
 /*#include "LineNumberArea.h"*/
 #include "SyntaxHighlighter.h"
+#include "Parser.h"
 
 class QssTextEditor : public QPlainTextEdit
 {
@@ -20,6 +21,7 @@ public:
 
     void lineNumberAreaPaintEvent(QPaintEvent *ev);
     int lineNumberAreaWidth();
+    Parser parser;
 
 protected:
     void resizeEvent(QResizeEvent *e) override;

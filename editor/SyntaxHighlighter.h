@@ -26,7 +26,6 @@ private:
         QTextCharFormat format;
     };
     QVector<HighlightingRule> rules;
-    Parser parser;
     std::shared_ptr<StyleSheetNode> styleSheet;
 };
 

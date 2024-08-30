@@ -18,6 +18,7 @@ public slots:
     void openQssFile();
     void saveQssFile();
     void applyQssFile();
+    void reformatQssFile();
 
 protected:
     QWidget *editorPanel;

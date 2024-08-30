@@ -1,9 +1,9 @@
 #include "QssTextEditor.h"
+#include "LineNumberArea.h"
 #include <QDebug>
 #include <QPainter>
 #include <QTextBlock>
 #include <QWidget>
-#include "LineNumberArea.h"
 
 QssTextEditor::QssTextEditor(QWidget *parent) : QPlainTextEdit(parent)
 {
@@ -83,7 +83,6 @@ void QssTextEditor::updateLineNumberAreaWidth(int newBlockCount)
 
 void QssTextEditor::highlightCurrentLine()
 {
-    qDebug() << "QssTextEditor::highlightCurrentLine()";
     QList<QTextEdit::ExtraSelection> extraSelections;
 
     if (!isReadOnly())
@@ -100,6 +99,8 @@ void QssTextEditor::highlightCurrentLine()
     }
 
     setExtraSelections(extraSelections);
+
+
 }
 
 void QssTextEditor::updateLineNumberArea(const QRect &rect, int dy)

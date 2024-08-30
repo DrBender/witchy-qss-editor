@@ -95,8 +95,6 @@ SyntaxHighlighter::~SyntaxHighlighter() {}
 
 void SyntaxHighlighter::highlightBlock(const QString &text)
 {
-    qDebug() << "SyntaxHighlighter::highlightBlock";
-    qDebug() << "TEXT:" << text;
     for (const HighlightingRule &rule : qAsConst(rules))
     {
         QRegularExpression expression(rule.pattern);
@@ -109,7 +107,4 @@ void SyntaxHighlighter::highlightBlock(const QString &text)
                       rule.format);
         }
     }
-
-
-
 }
