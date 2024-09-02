@@ -155,7 +155,8 @@ void MainWindow::applyQssFile()
 
 void MainWindow::reformatQssFile()
 {
-
+    QString plain_text = editor->toPlainText();
+    editor->parser.parse(plain_text);
     QString text = editor->parser.parsed_text;
     editor->setPlainText(text);
 }

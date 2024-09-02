@@ -67,7 +67,7 @@ public:
         {
             result += "    " + prop->toString() + "\n";
         }
-        result += "}";
+        result += "}\n";
         return result;
     }
 };
@@ -98,12 +98,5 @@ public:
         return result;
     }
 };
-
-class Position
-{
-    int line_pos;
-    int char_pos;
-};
-
 
 #endif /* AST_H */

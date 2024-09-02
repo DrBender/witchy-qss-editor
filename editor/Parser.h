@@ -1,8 +1,8 @@
 #pragma once
-#include "qchar.h"
 #ifndef PARSER_H
 #define PARSER_H
 
+#include "qchar.h"
 #include "Ast.h"
 #include <QString>
 #include <QVector>
@@ -27,14 +27,16 @@ public:
 };
 class Parser
 {
-
     std::shared_ptr<StyleSheetNode> styleSheet;
 
 public:
     Parser();
     QString parsed_text;
+
+    QVector<Token> tokens;
     QVector<Token> parse(QString &text);
-    void parseProperties(std::shared_ptr<RuleNode> rule, QString &prop_text);
+    int parseProperties(std::shared_ptr<RuleNode> rule,
+                        const QString &prop_text, int start, int end);
 };
 
 #endif /* PARSER_H */
