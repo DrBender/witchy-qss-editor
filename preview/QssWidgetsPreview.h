@@ -30,6 +30,12 @@
 #include <QToolBar>
 #include <QPlainTextEdit>
 #include <QGroupBox>
+#include <QListView>
+#include <QListWidget>
+#include <QTreeView>
+#include <QTreeWidget>
+#include <QTableView>
+#include <QTableWidget>
 
 class QssWidgetsPreview : public QWidget
 {
@@ -70,5 +76,14 @@ protected:
     QPushButton * infoButton;
     QPushButton * warningButton;
     QPushButton * errorButton;
+
+     QListView * testListView;
+
+     QListWidget * testListWidget;
+
+     QTreeView * testTreeView;
+     QTreeWidget * testTreeWidget;
+     QTableView * testTableView;
+     QTableWidget * testTableWidget;
 };
 #endif /* QSSWIDGETSPREVIEW_H */

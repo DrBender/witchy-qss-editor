@@ -2,11 +2,17 @@
 #include "qboxlayout.h"
 #include "qcheckbox.h"
 #include "qgroupbox.h"
+#include "qlistview.h"
+#include "qlistwidget.h"
 #include "qmainwindow.h"
 #include "qmdiarea.h"
 #include "qplaintextedit.h"
+#include "qtableview.h"
+#include "qtablewidget.h"
 #include "qtabwidget.h"
 #include "qtoolbar.h"
+#include "qtreeview.h"
+#include "qtreewidget.h"
 #include "qwidget.h"
 #include <QDebug>
 #include <QVBoxLayout>
@@ -46,6 +52,13 @@ QssWidgetsPreview::QssWidgetsPreview(QWidget *parent) : QWidget(parent)
     warningButton = new QPushButton(testSubWindow);
     errorButton = new QPushButton(testSubWindow);
 
+    testListView = new QListView(testSubWindow);
+    testListWidget = new QListWidget(testSubWindow);
+    testTreeView = new QTreeView(testSubWindow);
+    testTreeWidget = new QTreeWidget(testSubWindow);
+    testTableView = new QTableView(testSubWindow);
+    testTableWidget = new QTableWidget(testSubWindow);
+
     setupWidgetsLayout();
     setTexts();
 }
@@ -82,27 +95,21 @@ void QssWidgetsPreview::setupWidgetsLayout()
     QWidget *textEditWidgets = new QWidget(testTabWidget);
     QWidget *tableWidgets = new QWidget(testTabWidget);
     QWidget *groupWidgets = new QWidget(testTabWidget);
+    QWidget *listWidgets = new QWidget(testTabWidget);
     testTabWidget->clear();
     testTabWidget->addTab(simpleWidgets, "Simple Widgets");
     testTabWidget->addTab(treeWidgets, "Tree Widgets");
     testTabWidget->addTab(textEditWidgets, "Text Edit");
     testTabWidget->addTab(tableWidgets, "Table Widgets");
     testTabWidget->addTab(groupWidgets, "Group Widgets");
+    testTabWidget->addTab(listWidgets, "List Widgets");
     /*QScrollBar * test*/
     // QScrollArea
     // QToolButton
     // QTabBar
     // QToolTip
-    // QGroupBox
     // QFrame
-    // QListView
-    // QListWidget
-    // QTreeView
-    // QTreeWidget
-    // QTableView
-    // QTableWidget
 
-    // QToolBar
     // QStatusBar
     // QMessageBox
     // QSplitter
@@ -128,6 +135,28 @@ void QssWidgetsPreview::setupWidgetsLayout()
     text_layout->addWidget(testTextEdit);
     text_layout->addWidget(testPlainTextEdit);
     textEditWidgets->setLayout(text_layout);
+    
+    treeWidgets->setLayout(new QVBoxLayout(internalWidget));
+    treeWidgets->layout()->addWidget(testTreeView);
+    treeWidgets->layout()->addWidget(testTreeWidget);
+
+    listWidgets->setLayout(new QHBoxLayout(internalWidget));
+    listWidgets->layout()->addWidget(testListView);
+    listWidgets->layout()->addWidget(testListWidget);
+    
+    tableWidgets->setLayout(new QVBoxLayout(internalWidget));
+    tableWidgets->layout()->addWidget(testTableView);
+    tableWidgets->layout()->addWidget(testTableWidget);
+
+    QHBoxLayout *hbox = new QHBoxLayout;
+    hbox->addWidget(questionButton);
+    hbox->addWidget(infoButton);
+    hbox->addWidget(warningButton);
+    hbox->addWidget(errorButton);
+    /*hbox->addStretch(1);*/
+    messageGroup->setLayout(hbox);
+    groupWidgets->setLayout(new QVBoxLayout());
+    groupWidgets->layout()->addWidget(messageGroup);
 
     internalWidget->setLayout(internal_layout);
     /*this->setLayout(v_ly);*/
@@ -151,5 +180,12 @@ void QssWidgetsPreview::setTexts()
     testComboBox->clear();
     testComboBox->addItems(comboItems);
 
-    testPlainTextEdit->setPlainText("Plain Text Edit");
+    testPlainTextEdit->setPlainText(tr("Plain Text Edit"));
+
+    messageGroup->setTitle(tr("QT Messages"));
+
+    questionButton->setText(tr("Question"));
+    infoButton->setText(tr("Information"));
+    warningButton->setText(tr("Warning"));
+    errorButton->setText(tr("Error"));
 }
