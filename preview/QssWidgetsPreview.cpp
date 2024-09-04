@@ -76,6 +76,8 @@ void QssWidgetsPreview::setupWidgetsLayout()
 
 void QssWidgetsPreview::setTexts()
 {
+    const QStringList comboItems = {tr("Item 1"), tr("Item 2"), tr("Item 3")};
+    
     testButton->setText(tr("Test Button"));
     testCheckBox_1->setText(tr("Test Check Box"));
 
@@ -83,8 +85,9 @@ void QssWidgetsPreview::setTexts()
     testLineEdit->setText(tr("Test Line Edit"));
     testTextEdit->setText(tr("Test Text Edit"));
     testRadioButton_1->setText(tr("Test Radio Button 1"));
-    /*testComboBox->setText(tr("Test Combo BOx"));*/
     testProgressBar->setFormat("Test Progress Bar");
     testProgressBar->setValue(10);
     /*testSpinBox->set;*/
+    testComboBox->clear();
+    testComboBox->addItems(comboItems);
 }
