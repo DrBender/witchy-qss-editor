@@ -1,9 +1,4 @@
 #pragma once
-#include "qgroupbox.h"
-#include "qplaintextedit.h"
-#include "qpushbutton.h"
-#include "qtextedit.h"
-#include "qtoolbar.h"
 #ifndef QSSWIDGETSPREVIEW_H
 #define QSSWIDGETSPREVIEW_H
 
@@ -15,27 +10,26 @@
 #include <QCheckBox>
 #include <QComboBox>
 #include <QDial>
+#include <QGroupBox>
 #include <QLabel>
 #include <QLineEdit>
+#include <QListView>
+#include <QListWidget>
+#include <QMdiArea>
+#include <QMdiSubWindow>
+#include <QMenuBar>
 #include <QPlainTextEdit>
 #include <QProgressBar>
 #include <QPushButton>
 #include <QRadioButton>
 #include <QSpinBox>
-#include <QTextEdit>
-#include <QMdiArea>
-#include <QMdiSubWindow>
-#include <QMenuBar>
 #include <QTabWidget>
-#include <QToolBar>
-#include <QPlainTextEdit>
-#include <QGroupBox>
-#include <QListView>
-#include <QListWidget>
-#include <QTreeView>
-#include <QTreeWidget>
 #include <QTableView>
 #include <QTableWidget>
+#include <QTextEdit>
+#include <QToolBar>
+#include <QTreeView>
+#include <QTreeWidget>
 
 class QssWidgetsPreview : public QWidget
 {
@@ -47,15 +41,16 @@ public:
 
     void setupWidgetsLayout();
     void setTexts();
+
 protected:
-    QMdiArea * testMdiArea;
-    QMdiSubWindow * testSubWindow;
+    QMdiArea *testMdiArea;
+    QMdiSubWindow *testSubWindow;
 
     QPushButton *testButton;
     QCheckBox *testCheckBox_1;
     QLabel *testLabel;
     QLineEdit *testLineEdit;
-    /*QTextEdit *testTextEdit;*/
+
     QRadioButton *testRadioButton_1;
     QComboBox *testComboBox;
     /*QSlider * */
@@ -64,26 +59,26 @@ protected:
     QDial *testDial;
     QCalendarWidget *testCalendar;
 
-    QMenuBar * testMenuBar;
-    QTabWidget * testTabWidget;
+    QMenuBar *testMenuBar;
+    QTabWidget *testTabWidget;
 
-    QToolBar * testToolBar;
-    QTextEdit * testTextEdit;
-    QPlainTextEdit * testPlainTextEdit;
+    QToolBar *testToolBar;
+    QTextEdit *testTextEdit;
+    QPlainTextEdit *testPlainTextEdit;
 
-    QGroupBox * messageGroup;
-    QPushButton * questionButton;
-    QPushButton * infoButton;
-    QPushButton * warningButton;
-    QPushButton * errorButton;
+    QGroupBox *messageGroup;
+    QPushButton *questionButton;
+    QPushButton *infoButton;
+    QPushButton *warningButton;
+    QPushButton *errorButton;
 
-     QListView * testListView;
+    QListView *testListView;
 
-     QListWidget * testListWidget;
+    QListWidget *testListWidget;
 
-     QTreeView * testTreeView;
-     QTreeWidget * testTreeWidget;
-     QTableView * testTableView;
-     QTableWidget * testTableWidget;
+    QTreeView *testTreeView;
+    QTreeWidget *testTreeWidget;
+    QTableView *testTableView;
+    QTableWidget *testTableWidget;
 };
 #endif /* QSSWIDGETSPREVIEW_H */
