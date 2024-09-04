@@ -1,4 +1,9 @@
 #pragma once
+#include "qgroupbox.h"
+#include "qplaintextedit.h"
+#include "qpushbutton.h"
+#include "qtextedit.h"
+#include "qtoolbar.h"
 #ifndef QSSWIDGETSPREVIEW_H
 #define QSSWIDGETSPREVIEW_H
 
@@ -18,6 +23,13 @@
 #include <QRadioButton>
 #include <QSpinBox>
 #include <QTextEdit>
+#include <QMdiArea>
+#include <QMdiSubWindow>
+#include <QMenuBar>
+#include <QTabWidget>
+#include <QToolBar>
+#include <QPlainTextEdit>
+#include <QGroupBox>
 
 class QssWidgetsPreview : public QWidget
 {
@@ -30,11 +42,14 @@ public:
     void setupWidgetsLayout();
     void setTexts();
 protected:
+    QMdiArea * testMdiArea;
+    QMdiSubWindow * testSubWindow;
+
     QPushButton *testButton;
     QCheckBox *testCheckBox_1;
     QLabel *testLabel;
     QLineEdit *testLineEdit;
-    QTextEdit *testTextEdit;
+    /*QTextEdit *testTextEdit;*/
     QRadioButton *testRadioButton_1;
     QComboBox *testComboBox;
     /*QSlider * */
@@ -42,5 +57,18 @@ protected:
     QSpinBox *testSpinBox;
     QDial *testDial;
     QCalendarWidget *testCalendar;
+
+    QMenuBar * testMenuBar;
+    QTabWidget * testTabWidget;
+
+    QToolBar * testToolBar;
+    QTextEdit * testTextEdit;
+    QPlainTextEdit * testPlainTextEdit;
+
+    QGroupBox * messageGroup;
+    QPushButton * questionButton;
+    QPushButton * infoButton;
+    QPushButton * warningButton;
+    QPushButton * errorButton;
 };
 #endif /* QSSWIDGETSPREVIEW_H */
