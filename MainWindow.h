@@ -28,6 +28,7 @@ protected:
     QString currentQssFile;
 
     void setTexts();
+    void setupMenuBar();
     void setupEditorPanel();
     void setupElementsPanel();
 

@@ -43,6 +43,7 @@ MainWindow::MainWindow()
     mainLayout->setSpacing(0);
     mainLayout->setContentsMargins(0, 0, 0, 0);
 
+    setupMenuBar();
     setupEditorPanel();
     /*setupElementsPanel();*/
 
@@ -55,6 +56,27 @@ MainWindow::MainWindow()
 }
 
 MainWindow::~MainWindow() {}
+
+void MainWindow::setupMenuBar()
+{
+    QMenuBar *menuBar = this->menuBar();
+    QMenu *fileMenu = menuBar->addMenu("&File");
+    QAction *newAction = fileMenu->addAction("New");
+    QAction *openAction = fileMenu->addAction("Open");
+
+    QMenu *editMenu = menuBar->addMenu("&Edit");
+    QAction *cutAction = editMenu->addAction("Cut");
+    QAction *copyAction = editMenu->addAction("Copy");
+    QAction *pasteAction = editMenu->addAction("Paste");
+
+    QMenu *helpMenu = menuBar->addMenu("&Help");
+    QAction *aboutAction = helpMenu->addAction("About");
+
+    /*QToolBar * toolBar = this->toolBar*/
+    connect(newAction, &QAction::triggered, this, []()
+            { QMessageBox::information(nullptr, "Action", "New selected"); });
+}
+
 void MainWindow::setupEditorPanel()
 {
     editorPanel->setLayout(new QVBoxLayout(editorPanel));
@@ -182,10 +204,12 @@ void MainWindow::loadSettings()
         return;
     }
     QFile file(currentQssFile);
-    qDebug() << "cur "<< currentQssFile;
+    qDebug() << "cur " << currentQssFile;
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        QMessageBox::warning(this, "Error", QString("Couldn't open file %1 for reading.").arg(currentQssFile));
+        QMessageBox::warning(
+            this, "Error",
+            QString("Couldn't open file %1 for reading.").arg(currentQssFile));
         return;
     }
     QTextStream in(&file);

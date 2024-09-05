@@ -2,6 +2,7 @@
 #include "qboxlayout.h"
 #include "qcheckbox.h"
 #include "qgroupbox.h"
+#include "qhash.h"
 #include "qlistview.h"
 #include "qlistwidget.h"
 #include "qmainwindow.h"
@@ -16,6 +17,7 @@
 #include "qtreewidget.h"
 #include "qwidget.h"
 #include <QDebug>
+#include <QMessageBox>
 #include <QVBoxLayout>
 
 QssWidgetsPreview::QssWidgetsPreview(QWidget *parent) : QWidget(parent)
@@ -28,8 +30,9 @@ QssWidgetsPreview::QssWidgetsPreview(QWidget *parent) : QWidget(parent)
 
     testMdiArea->addSubWindow(testSubWindow);
 
-    testButton = new QPushButton(this);
     testCheckBox_1 = new QCheckBox(this);
+    testCheckBox_2 = new QCheckBox(this);
+    testCheckBox_3 = new QCheckBox(this);
     testLabel = new QLabel(this);
     testLineEdit = new QLineEdit(this);
     testRadioButton_1 = new QRadioButton(this);
@@ -49,7 +52,7 @@ QssWidgetsPreview::QssWidgetsPreview(QWidget *parent) : QWidget(parent)
     testTextEdit = new QTextEdit(testSubWindow);
     testPlainTextEdit = new QPlainTextEdit(testSubWindow);
 
-    messageGroup = new QGroupBox(testSubWindow);
+    buttonsGroup = new QGroupBox(testSubWindow);
     questionButton = new QPushButton(testSubWindow);
     infoButton = new QPushButton(testSubWindow);
     warningButton = new QPushButton(testSubWindow);
@@ -78,7 +81,6 @@ void QssWidgetsPreview::setupWidgetsLayout()
     testSubWindow->setWidget(internalWidget);
     QVBoxLayout *internal_layout = new QVBoxLayout(internalWidget);
     internal_layout->setMargin(0);
-    QVBoxLayout *v_ly = new QVBoxLayout(internalWidget);
 
     QMenu *fileMenu = testMenuBar->addMenu("File");
     QAction *newAction = fileMenu->addAction("New");
@@ -93,18 +95,17 @@ void QssWidgetsPreview::setupWidgetsLayout()
     QAction *action1 = testToolBar->addAction("Action 1");
     QAction *action2 = testToolBar->addAction("Action 2");
 
-    QWidget *simpleWidgets = new QWidget(testTabWidget);
+    /*QWidget *simpleWidgets = new QWidget(testTabWidget);*/
+    setupSimpleWidgets();
     QWidget *treeWidgets = new QWidget(testTabWidget);
     QWidget *textEditWidgets = new QWidget(testTabWidget);
     QWidget *tableWidgets = new QWidget(testTabWidget);
-    QWidget *groupWidgets = new QWidget(testTabWidget);
     QWidget *listWidgets = new QWidget(testTabWidget);
     testTabWidget->clear();
     testTabWidget->addTab(simpleWidgets, "Simple Widgets");
     testTabWidget->addTab(treeWidgets, "Tree Widgets");
     testTabWidget->addTab(textEditWidgets, "Text Edit");
     testTabWidget->addTab(tableWidgets, "Table Widgets");
-    testTabWidget->addTab(groupWidgets, "Group Widgets");
     testTabWidget->addTab(listWidgets, "List Widgets");
     /*QScrollBar * test*/
     // QScrollArea
@@ -121,24 +122,12 @@ void QssWidgetsPreview::setupWidgetsLayout()
     internal_layout->addWidget(testMenuBar);
     internal_layout->addWidget(testTabWidget);
 
-    v_ly->addWidget(testButton);
-    v_ly->addWidget(testCheckBox_1);
-    v_ly->addWidget(testLabel);
-    v_ly->addWidget(testLineEdit);
-    v_ly->addWidget(testRadioButton_1);
-    v_ly->addWidget(testComboBox);
-    v_ly->addWidget(testProgressBar);
-    v_ly->addWidget(testSpinBox);
-    v_ly->addWidget(testDial);
-    v_ly->addWidget(testCalendar);
-    simpleWidgets->setLayout(v_ly);
-
     QVBoxLayout *text_layout = new QVBoxLayout(internalWidget);
     text_layout->addWidget(testToolBar);
     text_layout->addWidget(testTextEdit);
     text_layout->addWidget(testPlainTextEdit);
     textEditWidgets->setLayout(text_layout);
-    
+
     treeWidgets->setLayout(new QVBoxLayout(internalWidget));
     treeWidgets->layout()->addWidget(testTreeView);
     treeWidgets->layout()->addWidget(testTreeWidget);
@@ -146,37 +135,93 @@ void QssWidgetsPreview::setupWidgetsLayout()
     listWidgets->setLayout(new QHBoxLayout(internalWidget));
     listWidgets->layout()->addWidget(testListView);
     listWidgets->layout()->addWidget(testListWidget);
-    
+
     tableWidgets->setLayout(new QVBoxLayout(internalWidget));
     tableWidgets->layout()->addWidget(testTableView);
     tableWidgets->layout()->addWidget(testTableWidget);
-
-    QHBoxLayout *hbox = new QHBoxLayout;
-    hbox->addWidget(questionButton);
-    hbox->addWidget(infoButton);
-    hbox->addWidget(warningButton);
-    hbox->addWidget(errorButton);
-    /*hbox->addStretch(1);*/
-    messageGroup->setLayout(hbox);
-    groupWidgets->setLayout(new QVBoxLayout());
-    groupWidgets->layout()->addWidget(messageGroup);
 
     internalWidget->setLayout(internal_layout);
     /*this->setLayout(v_ly);*/
     this->setLayout(mdiLayout);
 }
 
+void QssWidgetsPreview::setupSimpleWidgets()
+{
+
+    simpleWidgets = new QWidget(testTabWidget);
+
+    /*QVBoxLayout *v_ly = new QVBoxLayout(internalWidget);*/
+
+    QVBoxLayout *v_ly = new QVBoxLayout(testTabWidget);
+    radioGroup = new QGroupBox(testTabWidget);
+    radioGroup->setLayout(new QVBoxLayout);
+
+    radioGroup->layout()->addWidget(testRadioButton_1);
+    radioGroup->layout()->addWidget(testRadioButton_2);
+    radioGroup->layout()->addWidget(testRadioButton_3);
+
+    checkGroup = new QGroupBox(testTabWidget);
+    checkGroup->setLayout(new QHBoxLayout);
+
+    checkGroup->layout()->addWidget(testCheckBox_1);
+    checkGroup->layout()->addWidget(testCheckBox_2);
+    checkGroup->layout()->addWidget(testCheckBox_3);
+
+    buttonsGroup->setLayout(new QHBoxLayout);
+    buttonsGroup->layout()->addWidget(questionButton);
+    buttonsGroup->layout()->addWidget(infoButton);
+    buttonsGroup->layout()->addWidget(warningButton);
+    buttonsGroup->layout()->addWidget(errorButton);
+    connect(
+        questionButton, &QPushButton::clicked, this, [this]()
+        { QMessageBox::question(this, "Question Message", "Some question?"); });
+    connect(infoButton, &QPushButton::clicked, this,
+            [this]() {
+                QMessageBox::information(this, "Info Message",
+                                         "Some Information");
+            });
+    connect(warningButton, &QPushButton::clicked, this,
+            [this]() {
+                QMessageBox::warning(this, "Warning Message", "Some warning!");
+            });
+    connect(errorButton, &QPushButton::clicked, this,
+            [this]() {
+                QMessageBox::critical(this, "Error Message", "Some error!!!!");
+            });
+
+    v_ly->addWidget(buttonsGroup);
+    v_ly->addWidget(checkGroup);
+    /*v_ly->addWidget(testCheckBox_1);*/
+    v_ly->addWidget(testLabel);
+    v_ly->addWidget(testLineEdit);
+    /*v_ly->addWidget(testRadioButton_1);*/
+    v_ly->addWidget(radioGroup);
+    v_ly->addWidget(testComboBox);
+    v_ly->addWidget(testProgressBar);
+    v_ly->addWidget(testSpinBox);
+    v_ly->addWidget(testDial);
+    v_ly->addWidget(testCalendar);
+    simpleWidgets->setLayout(v_ly);
+}
+
 void QssWidgetsPreview::setTexts()
 {
     const QStringList comboItems = {tr("Item 1"), tr("Item 2"), tr("Item 3")};
 
-    testButton->setText(tr("Test Button"));
-    testCheckBox_1->setText(tr("Test Check Box"));
+    checkGroup->setTitle(tr("CheckBox Group"));
+    testCheckBox_1->setText(tr("Test Check Box 1"));
+    testCheckBox_2->setText(tr("Test Check Box 2"));
+    testCheckBox_3->setText(tr("Test Check Box 3"));
 
     testLabel->setText(tr("Test Label"));
     testLineEdit->setText(tr("Test Line Edit"));
     testTextEdit->setText(tr("Test Text Edit"));
+
+    radioGroup->setTitle(tr("Radio Group"));
     testRadioButton_1->setText(tr("Test Radio Button 1"));
+    testRadioButton_2->setText(tr("Test Radio Button 2"));
+    testRadioButton_3->setText(tr("Test Radio Button 3"));
+
     testProgressBar->setFormat("Test Progress Bar");
     testProgressBar->setValue(10);
     /*testSpinBox->set;*/
@@ -185,7 +230,7 @@ void QssWidgetsPreview::setTexts()
 
     testPlainTextEdit->setPlainText(tr("Plain Text Edit"));
 
-    messageGroup->setTitle(tr("QT Messages"));
+    buttonsGroup->setTitle(tr("QT Messages"));
 
     questionButton->setText(tr("Question"));
     infoButton->setText(tr("Information"));
