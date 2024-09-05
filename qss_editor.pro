@@ -12,10 +12,12 @@ RCC_DIR = rcc
 
 INCLUDEPATH += editor
 INCLUDEPATH += preview
+INCLUDEPATH += config
 
 SOURCES += \
     main.cpp \
     MainWindow.cpp \
+    config/settings.cpp \
     preview/QssWidgetsPreview.cpp \
     editor/LineNumberArea.cpp \
     editor/Parser.cpp \
@@ -25,6 +27,7 @@ SOURCES += \
 
 HEADERS += \
     MainWindow.h \
+    config/settings.h \
     preview/QssWidgetsPreview.h \
     editor/Ast.h \
     editor/LineNumberArea.h \

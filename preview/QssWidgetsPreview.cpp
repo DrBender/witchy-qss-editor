@@ -7,6 +7,7 @@
 #include "qmainwindow.h"
 #include "qmdiarea.h"
 #include "qplaintextedit.h"
+#include "qradiobutton.h"
 #include "qtableview.h"
 #include "qtablewidget.h"
 #include "qtabwidget.h"
@@ -32,6 +33,8 @@ QssWidgetsPreview::QssWidgetsPreview(QWidget *parent) : QWidget(parent)
     testLabel = new QLabel(this);
     testLineEdit = new QLineEdit(this);
     testRadioButton_1 = new QRadioButton(this);
+    testRadioButton_2 = new QRadioButton(this);
+    testRadioButton_3 = new QRadioButton(this);
     testComboBox = new QComboBox(this);
     /*QSlider * */
     testProgressBar = new QProgressBar(this);

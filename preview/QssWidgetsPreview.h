@@ -1,4 +1,5 @@
 #pragma once
+#include "qradiobutton.h"
 #ifndef QSSWIDGETSPREVIEW_H
 #define QSSWIDGETSPREVIEW_H
 
@@ -52,6 +53,8 @@ protected:
     QLineEdit *testLineEdit;
 
     QRadioButton *testRadioButton_1;
+    QRadioButton *testRadioButton_2;
+    QRadioButton *testRadioButton_3;
     QComboBox *testComboBox;
     /*QSlider * */
     QProgressBar *testProgressBar;

@@ -1,4 +1,5 @@
 #include "MainWindow.h"
+#include "config/settings.h"
 #include "qboxlayout.h"
 #include "qchar.h"
 #include "qglobal.h"
@@ -10,16 +11,18 @@
 #include <QDebug>
 #include <QFileDialog>
 #include <QFrame>
-#include <QPushButton>
-#include <QVBoxLayout>
 #include <QMessageBox>
+#include <QPushButton>
+#include <QSettings>
+#include <QVBoxLayout>
 
 MainWindow::MainWindow()
 {
+
     setGeometry(QRect(100, 100, 960, 560));
 
     /*setWindowFlags(Qt::FramelessWindowHint);*/
-
+    currentQssFile = "";
     QWidget *central_widget = new QWidget(this);
     QFrame *background_app = new QFrame(central_widget);
     background_app->setFrameShape(QFrame::NoFrame);
@@ -47,6 +50,8 @@ MainWindow::MainWindow()
     centralWidget()->setLayout(mainLayout);
 
     setTexts();
+
+    loadSettings();
 }
 
 MainWindow::~MainWindow() {}
@@ -60,7 +65,7 @@ void MainWindow::setupEditorPanel()
     QPushButton *open = new QPushButton(editorPanel);
     QPushButton *save = new QPushButton(editorPanel);
     QPushButton *apply_style = new QPushButton(editorPanel);
-    QPushButton * reformat = new QPushButton(editorPanel);
+    QPushButton *reformat = new QPushButton(editorPanel);
 
     open->setText(tr("Open"));
     save->setText(tr("Save"));
@@ -78,31 +83,27 @@ void MainWindow::setupEditorPanel()
     connect(open, SIGNAL(clicked()), this, SLOT(openQssFile()));
     connect(save, SIGNAL(clicked()), this, SLOT(saveQssFile()));
     connect(apply_style, SIGNAL(clicked()), this, SLOT(applyQssFile()));
-    connect(reformat, &QPushButton::clicked, this, &MainWindow::reformatQssFile);
+    connect(reformat, &QPushButton::clicked, this,
+            &MainWindow::reformatQssFile);
 }
-void MainWindow::setupElementsPanel()
+void MainWindow::setupElementsPanel() {}
+void MainWindow::setTexts() {}
+
+void MainWindow::openQssFile()
 {
+    qDebug() << "open Qss File";
+    QString fileName = QFileDialog::getOpenFileName(
+        this, "Open file", "", "Qss Files (*.qss);;All Files (*)");
 
-}
-void MainWindow::setTexts()
-{
-
-}
-
-void MainWindow::openQssFile() { 
-    qDebug() << "open Qss File"; 
-    QString fileName = QFileDialog::getOpenFileName(this, 
-                        "Open file", 
-                        "", 
-                        "Qss Files (*.qss);;All Files (*)");
-
-    if (fileName.isEmpty()) {
-        return; 
+    if (fileName.isEmpty())
+    {
+        return;
     }
 
     QFile file(fileName);
-
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    currentQssFile = fileName;
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
         QMessageBox::warning(this, "Error", "Couldn't open file for reading.");
         return;
     }
@@ -111,7 +112,7 @@ void MainWindow::openQssFile() {
     QString fileContent = in.readAll();
 
     file.close();
-    
+
     editor->setPlainText(fileContent);
 }
 void MainWindow::saveQssFile()
@@ -119,18 +120,18 @@ void MainWindow::saveQssFile()
     qDebug() << "save Qss File";
     // QFileDialog dialog(this);
     // dialog.setNameFilter(tr("QSS (*.qss)"));
-    QString fileName = QFileDialog::getSaveFileName(this, 
-                        "Save file", 
-                        "", 
-                        "Qss Files (*.qss);;All Files (*)");
+    QString fileName = QFileDialog::getSaveFileName(
+        this, "Save file", "", "Qss Files (*.qss);;All Files (*)");
 
-    if (fileName.isEmpty()) {
-        return; 
+    if (fileName.isEmpty())
+    {
+        return;
     }
 
     QFile file(fileName);
-
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+    currentQssFile = fileName;
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
         QMessageBox::warning(this, "Error", "Couldn't open file for writing.");
         return;
     }
@@ -149,7 +150,7 @@ void MainWindow::applyQssFile()
     elementsPanel->setStyleSheet(text);
 
     QString copy_text = text;
-    
+
     editor->parser.parse(copy_text);
 }
 
@@ -159,4 +160,44 @@ void MainWindow::reformatQssFile()
     editor->parser.parse(plain_text);
     QString text = editor->parser.parsed_text;
     editor->setPlainText(text);
+}
+
+void MainWindow::saveSettings()
+{
+    Settings &set = Settings::instance();
+    set.win_width = this->width();
+    set.win_height = this->height();
+    set.lastFile = currentQssFile;
+    set.saveSettings();
+}
+
+void MainWindow::loadSettings()
+{
+    Settings &set = Settings::instance();
+    set.loadSettings();
+
+    currentQssFile = set.lastFile;
+    if (currentQssFile.isEmpty())
+    {
+        return;
+    }
+    QFile file(currentQssFile);
+    qDebug() << "cur "<< currentQssFile;
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QMessageBox::warning(this, "Error", QString("Couldn't open file %1 for reading.").arg(currentQssFile));
+        return;
+    }
+    QTextStream in(&file);
+    QString fileContent = in.readAll();
+
+    file.close();
+
+    editor->setPlainText(fileContent);
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    saveSettings();
+    event->accept();
 }

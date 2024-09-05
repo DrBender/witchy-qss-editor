@@ -25,9 +25,16 @@ protected:
     QssWidgetsPreview *elementsPanel;
 
     QssTextEditor *editor;
+    QString currentQssFile;
 
     void setTexts();
     void setupEditorPanel();
     void setupElementsPanel();
+
+    void saveSettings();
+    void loadSettings();
+
+
+    void closeEvent(QCloseEvent *event) override; 
 };
 #endif
