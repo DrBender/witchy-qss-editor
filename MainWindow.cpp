@@ -15,6 +15,8 @@
 #include <QPushButton>
 #include <QSettings>
 #include <QVBoxLayout>
+#include <QSplitter>
+
 
 MainWindow::MainWindow()
 {
@@ -33,8 +35,13 @@ MainWindow::MainWindow()
     h_ly->setContentsMargins(0, 0, 0, 0);
     editorPanel = new QWidget(central_widget);
     elementsPanel = new QssWidgetsPreview(central_widget);
-    h_ly->addWidget(editorPanel);
-    h_ly->addWidget(elementsPanel);
+    QSplitter * splitter = new QSplitter(background_app);
+    splitter->addWidget(editorPanel);
+    splitter->addWidget(elementsPanel);
+
+    // h_ly->addWidget(editorPanel);
+    // h_ly->addWidget(elementsPanel);
+    h_ly->addWidget(splitter);
     background_app->setLayout(h_ly);
 
     QVBoxLayout *mainLayout = new QVBoxLayout(central_widget);

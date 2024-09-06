@@ -1,5 +1,4 @@
 #pragma once
-#include "qradiobutton.h"
 #ifndef QSSWIDGETSPREVIEW_H
 #define QSSWIDGETSPREVIEW_H
 
@@ -42,13 +41,15 @@ public:
 
     void setupWidgetsLayout();
     void setupSimpleWidgets();
+    void setupTreeWidgets();
     void setTexts();
+    void populateTree(QTreeWidgetItem *parent, const QString &path);
 
 protected:
     QMdiArea *testMdiArea;
     QMdiSubWindow *testSubWindow;
     QWidget *simpleWidgets;
-
+    QWidget *treeWidgets;
 
     QGroupBox *checkGroup;
     QCheckBox *testCheckBox_1;

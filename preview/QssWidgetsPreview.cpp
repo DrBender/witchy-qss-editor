@@ -2,7 +2,6 @@
 #include "qboxlayout.h"
 #include "qcheckbox.h"
 #include "qgroupbox.h"
-#include "qhash.h"
 #include "qlistview.h"
 #include "qlistwidget.h"
 #include "qmainwindow.h"
@@ -17,6 +16,9 @@
 #include "qtreewidget.h"
 #include "qwidget.h"
 #include <QDebug>
+#include <QDir>
+#include <QDirIterator>
+#include <QFileSystemModel>
 #include <QMessageBox>
 #include <QVBoxLayout>
 
@@ -29,7 +31,7 @@ QssWidgetsPreview::QssWidgetsPreview(QWidget *parent) : QWidget(parent)
     testSubWindow = new QMdiSubWindow();
 
     testMdiArea->addSubWindow(testSubWindow);
-
+    testSubWindow->showMaximized();
     testCheckBox_1 = new QCheckBox(this);
     testCheckBox_2 = new QCheckBox(this);
     testCheckBox_3 = new QCheckBox(this);
@@ -53,7 +55,7 @@ QssWidgetsPreview::QssWidgetsPreview(QWidget *parent) : QWidget(parent)
     testPlainTextEdit = new QPlainTextEdit(testSubWindow);
 
     buttonsGroup = new QGroupBox(testSubWindow);
-    questionButton = new QPushButton(testSubWindow);
+    questionButton = new QPushButton(buttonsGroup);
     infoButton = new QPushButton(testSubWindow);
     warningButton = new QPushButton(testSubWindow);
     errorButton = new QPushButton(testSubWindow);
@@ -97,10 +99,11 @@ void QssWidgetsPreview::setupWidgetsLayout()
 
     /*QWidget *simpleWidgets = new QWidget(testTabWidget);*/
     setupSimpleWidgets();
-    QWidget *treeWidgets = new QWidget(testTabWidget);
+    setupTreeWidgets();
     QWidget *textEditWidgets = new QWidget(testTabWidget);
     QWidget *tableWidgets = new QWidget(testTabWidget);
     QWidget *listWidgets = new QWidget(testTabWidget);
+
     testTabWidget->clear();
     testTabWidget->addTab(simpleWidgets, "Simple Widgets");
     testTabWidget->addTab(treeWidgets, "Tree Widgets");
@@ -127,10 +130,6 @@ void QssWidgetsPreview::setupWidgetsLayout()
     text_layout->addWidget(testTextEdit);
     text_layout->addWidget(testPlainTextEdit);
     textEditWidgets->setLayout(text_layout);
-
-    treeWidgets->setLayout(new QVBoxLayout(internalWidget));
-    treeWidgets->layout()->addWidget(testTreeView);
-    treeWidgets->layout()->addWidget(testTreeWidget);
 
     listWidgets->setLayout(new QHBoxLayout(internalWidget));
     listWidgets->layout()->addWidget(testListView);
@@ -167,7 +166,7 @@ void QssWidgetsPreview::setupSimpleWidgets()
     checkGroup->layout()->addWidget(testCheckBox_2);
     checkGroup->layout()->addWidget(testCheckBox_3);
 
-    buttonsGroup->setLayout(new QHBoxLayout);
+    buttonsGroup->setLayout(new QHBoxLayout(buttonsGroup));
     buttonsGroup->layout()->addWidget(questionButton);
     buttonsGroup->layout()->addWidget(infoButton);
     buttonsGroup->layout()->addWidget(warningButton);
@@ -204,6 +203,37 @@ void QssWidgetsPreview::setupSimpleWidgets()
     simpleWidgets->setLayout(v_ly);
 }
 
+void QssWidgetsPreview::setupTreeWidgets()
+{
+
+    treeWidgets = new QWidget(testTabWidget);
+
+    treeWidgets->setLayout(new QVBoxLayout(testTabWidget));
+    treeWidgets->layout()->addWidget(testTreeView);
+    treeWidgets->layout()->addWidget(testTreeWidget);
+
+    testTreeWidget->setColumnCount(1);
+    testTreeWidget->setHeaderLabel("File System");
+
+    QTreeWidgetItem *root = new QTreeWidgetItem(testTreeWidget);
+    root->setText(0, QDir::currentPath());
+
+    populateTree(root, QDir::currentPath());
+
+    testTreeWidget->expandAll();
+    testTreeWidget->show();
+
+    QFileSystemModel *model = new QFileSystemModel(testTabWidget);
+    /*model->setRootPath(QDir::rootPath());*/
+    model->setRootPath(QDir::currentPath());
+
+    testTreeView->setModel(model);
+    /*testTreeView->setRootIndex(model->index(QDir::rootPath()));*/
+    testTreeView->setRootIndex(model->index(QDir::currentPath()));
+
+    testTreeView->show();
+}
+
 void QssWidgetsPreview::setTexts()
 {
     const QStringList comboItems = {tr("Item 1"), tr("Item 2"), tr("Item 3")};
@@ -236,4 +266,21 @@ void QssWidgetsPreview::setTexts()
     infoButton->setText(tr("Information"));
     warningButton->setText(tr("Warning"));
     errorButton->setText(tr("Error"));
+}
+
+void QssWidgetsPreview::populateTree(QTreeWidgetItem *parent,
+                                     const QString &path)
+{
+    QDir dir(path);
+    QDirIterator it(path, QDir::NoDotAndDotDot | QDir::AllEntries);
+    while (it.hasNext())
+    {
+        it.next();
+        QTreeWidgetItem *item = new QTreeWidgetItem(parent);
+        item->setText(0, it.fileName());
+        if (it.fileInfo().isDir())
+        {
+            populateTree(item, it.filePath());
+        }
+    }
 }
