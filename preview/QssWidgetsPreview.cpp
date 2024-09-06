@@ -20,6 +20,7 @@
 #include <QDirIterator>
 #include <QFileSystemModel>
 #include <QMessageBox>
+#include <QStringListModel>
 #include <QVBoxLayout>
 
 QssWidgetsPreview::QssWidgetsPreview(QWidget *parent) : QWidget(parent)
@@ -100,9 +101,9 @@ void QssWidgetsPreview::setupWidgetsLayout()
     /*QWidget *simpleWidgets = new QWidget(testTabWidget);*/
     setupSimpleWidgets();
     setupTreeWidgets();
-    QWidget *textEditWidgets = new QWidget(testTabWidget);
+    setupTextEditWidgets();
+    setupListWidgets();
     QWidget *tableWidgets = new QWidget(testTabWidget);
-    QWidget *listWidgets = new QWidget(testTabWidget);
 
     testTabWidget->clear();
     testTabWidget->addTab(simpleWidgets, "Simple Widgets");
@@ -124,16 +125,6 @@ void QssWidgetsPreview::setupWidgetsLayout()
     // QDialogButtonBox
     internal_layout->addWidget(testMenuBar);
     internal_layout->addWidget(testTabWidget);
-
-    QVBoxLayout *text_layout = new QVBoxLayout(internalWidget);
-    text_layout->addWidget(testToolBar);
-    text_layout->addWidget(testTextEdit);
-    text_layout->addWidget(testPlainTextEdit);
-    textEditWidgets->setLayout(text_layout);
-
-    listWidgets->setLayout(new QHBoxLayout(internalWidget));
-    listWidgets->layout()->addWidget(testListView);
-    listWidgets->layout()->addWidget(testListWidget);
 
     tableWidgets->setLayout(new QVBoxLayout(internalWidget));
     tableWidgets->layout()->addWidget(testTableView);
@@ -190,10 +181,8 @@ void QssWidgetsPreview::setupSimpleWidgets()
 
     v_ly->addWidget(buttonsGroup);
     v_ly->addWidget(checkGroup);
-    /*v_ly->addWidget(testCheckBox_1);*/
     v_ly->addWidget(testLabel);
     v_ly->addWidget(testLineEdit);
-    /*v_ly->addWidget(testRadioButton_1);*/
     v_ly->addWidget(radioGroup);
     v_ly->addWidget(testComboBox);
     v_ly->addWidget(testProgressBar);
@@ -234,10 +223,61 @@ void QssWidgetsPreview::setupTreeWidgets()
     testTreeView->show();
 }
 
+void QssWidgetsPreview::setupTextEditWidgets()
+{
+    QString text =
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do "
+        "eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim "
+        "ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut "
+        "aliquip ex ea commodo consequat. Duis aute irure dolor in "
+        "reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla "
+        "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in "
+        "culpa qui officia deserunt mollit anim id est laborum.";
+    textEditWidgets = new QWidget(testTabWidget);
+    textEditWidgets->setLayout(new QVBoxLayout(textEditWidgets));
+    textEditWidgets->layout()->addWidget(testToolBar);
+    textEditWidgets->layout()->addWidget(testTextEdit);
+    textEditWidgets->layout()->addWidget(testPlainTextEdit);
+
+    testTextEdit->setText(text);
+    testPlainTextEdit->setPlainText(text);
+}
+
+void QssWidgetsPreview::setupListWidgets()
+{
+
+    listWidgets = new QWidget(testTabWidget);
+
+    listWidgets->setLayout(new QHBoxLayout(listWidgets));
+    listWidgets->layout()->addWidget(testListView);
+    listWidgets->layout()->addWidget(testListWidget);
+
+    QStringList items;
+    items << "Item 1" << "Item 2" << "Item 3" << "Item 4";
+
+    QStringListModel *model = new QStringListModel(items);
+
+    testListView->setModel(model);
+    testListView->show();
+
+    testListWidget->addItem("Item 1");
+    testListWidget->addItem("Item 2");
+    testListWidget->addItem("Item 3");
+
+    testListWidget->show();
+}
+
 void QssWidgetsPreview::setTexts()
 {
     const QStringList comboItems = {tr("Item 1"), tr("Item 2"), tr("Item 3")};
-
+    QString text =
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do "
+        "eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim "
+        "ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut "
+        "aliquip ex ea commodo consequat. Duis aute irure dolor in "
+        "reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla "
+        "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in "
+        "culpa qui officia deserunt mollit anim id est laborum.";
     checkGroup->setTitle(tr("CheckBox Group"));
     testCheckBox_1->setText(tr("Test Check Box 1"));
     testCheckBox_2->setText(tr("Test Check Box 2"));
@@ -245,7 +285,7 @@ void QssWidgetsPreview::setTexts()
 
     testLabel->setText(tr("Test Label"));
     testLineEdit->setText(tr("Test Line Edit"));
-    testTextEdit->setText(tr("Test Text Edit"));
+    testTextEdit->setText(text);
 
     radioGroup->setTitle(tr("Radio Group"));
     testRadioButton_1->setText(tr("Test Radio Button 1"));
@@ -258,7 +298,7 @@ void QssWidgetsPreview::setTexts()
     testComboBox->clear();
     testComboBox->addItems(comboItems);
 
-    testPlainTextEdit->setPlainText(tr("Plain Text Edit"));
+    testPlainTextEdit->setPlainText(text);
 
     buttonsGroup->setTitle(tr("QT Messages"));
 

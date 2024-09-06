@@ -1,4 +1,5 @@
 #pragma once
+#include "qchar.h"
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -6,6 +7,11 @@
 #include "qobjectdefs.h"
 #include <QMainWindow>
 #include "QssWidgetsPreview.h"
+
+class Session{
+    QString currentFilePath;
+
+};
 
 class MainWindow : public QMainWindow
 {
@@ -21,11 +27,12 @@ public slots:
     void reformatQssFile();
 
 protected:
+    QString windowTitle;
     QWidget *editorPanel;
     QssWidgetsPreview *elementsPanel;
 
     QssTextEditor *editor;
-    QString currentQssFile;
+    QString currentQssFilePath;
 
     void setTexts();
     void setupMenuBar();

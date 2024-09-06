@@ -22,9 +22,9 @@ MainWindow::MainWindow()
 {
 
     setGeometry(QRect(100, 100, 960, 560));
-
+    windowTitle = "Witchy Qss Editor";
     /*setWindowFlags(Qt::FramelessWindowHint);*/
-    currentQssFile = "";
+    currentQssFilePath = "";
     QWidget *central_widget = new QWidget(this);
     QFrame *background_app = new QFrame(central_widget);
     background_app->setFrameShape(QFrame::NoFrame);
@@ -39,8 +39,6 @@ MainWindow::MainWindow()
     splitter->addWidget(editorPanel);
     splitter->addWidget(elementsPanel);
 
-    // h_ly->addWidget(editorPanel);
-    // h_ly->addWidget(elementsPanel);
     h_ly->addWidget(splitter);
     background_app->setLayout(h_ly);
 
@@ -130,7 +128,9 @@ void MainWindow::openQssFile()
     }
 
     QFile file(fileName);
-    currentQssFile = fileName;
+    currentQssFilePath = fileName;
+    QString name = QFileInfo(currentQssFilePath).fileName();
+    this->setWindowTitle(windowTitle + " - " + name);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         QMessageBox::warning(this, "Error", "Couldn't open file for reading.");
@@ -158,7 +158,7 @@ void MainWindow::saveQssFile()
     }
 
     QFile file(fileName);
-    currentQssFile = fileName;
+    currentQssFilePath = fileName;
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         QMessageBox::warning(this, "Error", "Couldn't open file for writing.");
@@ -196,7 +196,7 @@ void MainWindow::saveSettings()
     Settings &set = Settings::instance();
     set.win_width = this->width();
     set.win_height = this->height();
-    set.lastFile = currentQssFile;
+    set.lastFile = currentQssFilePath;
     set.saveSettings();
 }
 
@@ -205,18 +205,18 @@ void MainWindow::loadSettings()
     Settings &set = Settings::instance();
     set.loadSettings();
 
-    currentQssFile = set.lastFile;
-    if (currentQssFile.isEmpty())
+    currentQssFilePath = set.lastFile;
+    if (currentQssFilePath.isEmpty())
     {
         return;
     }
-    QFile file(currentQssFile);
-    qDebug() << "cur " << currentQssFile;
+    QFile file(currentQssFilePath);
+    qDebug() << "cur " << currentQssFilePath;
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         QMessageBox::warning(
             this, "Error",
-            QString("Couldn't open file %1 for reading.").arg(currentQssFile));
+            QString("Couldn't open file %1 for reading.").arg(currentQssFilePath));
         return;
     }
     QTextStream in(&file);

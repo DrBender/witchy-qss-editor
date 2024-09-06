@@ -42,6 +42,8 @@ public:
     void setupWidgetsLayout();
     void setupSimpleWidgets();
     void setupTreeWidgets();
+    void setupTextEditWidgets();
+    void setupListWidgets();
     void setTexts();
     void populateTree(QTreeWidgetItem *parent, const QString &path);
 
@@ -50,6 +52,8 @@ protected:
     QMdiSubWindow *testSubWindow;
     QWidget *simpleWidgets;
     QWidget *treeWidgets;
+    QWidget *textEditWidgets;
+    QWidget *listWidgets;
 
     QGroupBox *checkGroup;
     QCheckBox *testCheckBox_1;
