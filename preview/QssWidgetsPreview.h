@@ -40,18 +40,33 @@ public:
     virtual ~QssWidgetsPreview();
 
     void setupWidgetsLayout();
+    void setupSimpleWidgets();
+    void setupTreeWidgets();
+    void setupTextEditWidgets();
+    void setupListWidgets();
     void setTexts();
+    void populateTree(QTreeWidgetItem *parent, const QString &path);
 
 protected:
     QMdiArea *testMdiArea;
     QMdiSubWindow *testSubWindow;
+    QWidget *simpleWidgets;
+    QWidget *treeWidgets;
+    QWidget *textEditWidgets;
+    QWidget *listWidgets;
 
-    QPushButton *testButton;
+    QGroupBox *checkGroup;
     QCheckBox *testCheckBox_1;
+    QCheckBox *testCheckBox_2;
+    QCheckBox *testCheckBox_3;
+
     QLabel *testLabel;
     QLineEdit *testLineEdit;
 
+    QGroupBox *radioGroup;
     QRadioButton *testRadioButton_1;
+    QRadioButton *testRadioButton_2;
+    QRadioButton *testRadioButton_3;
     QComboBox *testComboBox;
     /*QSlider * */
     QProgressBar *testProgressBar;
@@ -66,7 +81,7 @@ protected:
     QTextEdit *testTextEdit;
     QPlainTextEdit *testPlainTextEdit;
 
-    QGroupBox *messageGroup;
+    QGroupBox *buttonsGroup;
     QPushButton *questionButton;
     QPushButton *infoButton;
     QPushButton *warningButton;

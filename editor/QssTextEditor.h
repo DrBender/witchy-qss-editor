@@ -7,8 +7,8 @@
 #include <QPlainTextEdit>
 #include <qt5/QtCore/qobjectdefs.h>
 /*#include "LineNumberArea.h"*/
-#include "SyntaxHighlighter.h"
 #include "Parser.h"
+#include "SyntaxHighlighter.h"
 
 class QssTextEditor : public QPlainTextEdit
 {
@@ -25,14 +25,22 @@ public:
 
 protected:
     void resizeEvent(QResizeEvent *e) override;
+    void paintEvent(QPaintEvent *event) override;
 
 private:
     QWidget *lineNumberArea;
+    QWidget *colorPreviewArea;
     SyntaxHighlighter *highlighter;
+
+    void drawColorPreview(QPainter &painter, const QString &text,
+                          int yPosition);
+
 private slots:
     void updateLineNumberAreaWidth(int newBlockCount);
     void highlightCurrentLine();
     void updateLineNumberArea(const QRect &rect, int dy);
+
+    void highlightColors();
 };
 
 #endif /* QSSTEXTEDITOR_H */

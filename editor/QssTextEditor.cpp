@@ -8,7 +8,15 @@
 QssTextEditor::QssTextEditor(QWidget *parent) : QPlainTextEdit(parent)
 {
     setPlainText("QssTextEditor");
+
+    QFile styleF;
+    styleF.setFileName(":/editor");
+    styleF.open(QFile::ReadOnly);
+    QString qssStr = styleF.readAll();
+    setStyleSheet(qssStr);
+
     lineNumberArea = new LineNumberArea(this);
+    /*colorPreviewArea = new */
     connect(this, &QssTextEditor::blockCountChanged, this,
             &QssTextEditor::updateLineNumberAreaWidth);
     connect(this, &QssTextEditor::updateRequest, this,
@@ -20,6 +28,9 @@ QssTextEditor::QssTextEditor(QWidget *parent) : QPlainTextEdit(parent)
     highlightCurrentLine();
 
     highlighter = new SyntaxHighlighter(this->document());
+
+    connect(this, &QPlainTextEdit::textChanged, this,
+            &QssTextEditor::highlightColors);
 }
 
 QssTextEditor::~QssTextEditor() { qDebug() << "Destructor"; }
@@ -75,6 +86,56 @@ void QssTextEditor::resizeEvent(QResizeEvent *e)
     lineNumberArea->setGeometry(
         QRect(cr.left(), cr.top(), lineNumberAreaWidth(), cr.height()));
 }
+void QssTextEditor::paintEvent(QPaintEvent *event)
+{
+    QPlainTextEdit::paintEvent(event);
+
+    QPainter painter(viewport());
+
+    QTextBlock block = firstVisibleBlock();
+    int blockNumber = block.blockNumber();
+    int top = static_cast<int>(
+        blockBoundingGeometry(block).translated(contentOffset()).top());
+    int bottom = top + static_cast<int>(blockBoundingRect(block).height());
+
+    while (block.isValid() && top <= viewport()->rect().bottom())
+    {
+        if (block.isVisible() && bottom >= viewport()->rect().top())
+        {
+            QString text = block.text();
+            drawColorPreview(painter, text, top);
+        }
+
+        block = block.next();
+        top = bottom;
+        bottom = top + static_cast<int>(blockBoundingRect(block).height());
+        ++blockNumber;
+    }
+}
+void QssTextEditor::drawColorPreview(QPainter &painter, const QString &text,
+                                     int yPosition)
+{
+    QRegularExpression hexColorRegex("#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})");
+    QRegularExpressionMatch match = hexColorRegex.match(text);
+
+    if (match.hasMatch())
+    {
+        QString hexColor = match.captured(0);
+        QColor color(hexColor);
+
+        if (color.isValid())
+        {
+            int square_size = fontMetrics().height() - 4;
+            if (square_size < 0)
+                square_size = 1;
+            QRect colorRect(viewport()->width() - 30, yPosition + 1, square_size,
+                            square_size);
+
+            painter.fillRect(colorRect, color);
+            painter.drawRect(colorRect);
+        }
+    }
+}
 
 void QssTextEditor::updateLineNumberAreaWidth(int newBlockCount)
 {
@@ -99,8 +160,6 @@ void QssTextEditor::highlightCurrentLine()
     }
 
     setExtraSelections(extraSelections);
-
-
 }
 
 void QssTextEditor::updateLineNumberArea(const QRect &rect, int dy)
@@ -114,3 +173,5 @@ void QssTextEditor::updateLineNumberArea(const QRect &rect, int dy)
     if (rect.contains(viewport()->rect()))
         updateLineNumberAreaWidth(0);
 }
+
+void QssTextEditor::highlightColors() { viewport()->update(); }
