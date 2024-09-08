@@ -4,13 +4,13 @@
 #define MAINWINDOW_H
 
 #include "QssTextEditor.h"
+#include "QssWidgetsPreview.h"
 #include "qobjectdefs.h"
 #include <QMainWindow>
-#include "QssWidgetsPreview.h"
 
-class Session{
+class Session
+{
     QString currentFilePath;
-
 };
 
 class MainWindow : public QMainWindow
@@ -42,7 +42,6 @@ protected:
     void saveSettings();
     void loadSettings();
 
-
-    void closeEvent(QCloseEvent *event) override; 
+    void closeEvent(QCloseEvent *event) override;
 };
 #endif
