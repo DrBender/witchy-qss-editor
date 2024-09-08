@@ -22,6 +22,7 @@ MainWindow::MainWindow()
 
     setGeometry(QRect(100, 100, 960, 560));
     windowTitle = "Witchy Qss Editor";
+    
     /*setWindowFlags(Qt::FramelessWindowHint);*/
     currentQssFilePath = "";
     QWidget *central_widget = new QWidget(this);
