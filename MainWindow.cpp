@@ -14,9 +14,8 @@
 #include <QMessageBox>
 #include <QPushButton>
 #include <QSettings>
-#include <QVBoxLayout>
 #include <QSplitter>
-
+#include <QVBoxLayout>
 
 MainWindow::MainWindow()
 {
@@ -35,7 +34,7 @@ MainWindow::MainWindow()
     h_ly->setContentsMargins(0, 0, 0, 0);
     editorPanel = new QWidget(central_widget);
     elementsPanel = new QssWidgetsPreview(central_widget);
-    QSplitter * splitter = new QSplitter(background_app);
+    QSplitter *splitter = new QSplitter(background_app);
     splitter->addWidget(editorPanel);
     splitter->addWidget(elementsPanel);
 
@@ -74,12 +73,31 @@ void MainWindow::setupMenuBar()
     QAction *copyAction = editMenu->addAction("Copy");
     QAction *pasteAction = editMenu->addAction("Paste");
 
+    QMenu *viewmenu = menuBar->addMenu("&View");
+    QAction *showColorsPreview = viewmenu->addAction("Show colors preview");
+    showColorsPreview->setCheckable(true);
+
     QMenu *helpMenu = menuBar->addMenu("&Help");
     QAction *aboutAction = helpMenu->addAction("About");
 
     /*QToolBar * toolBar = this->toolBar*/
     connect(newAction, &QAction::triggered, this, []()
             { QMessageBox::information(nullptr, "Action", "New selected"); });
+    connect(openAction, &QAction::triggered, this, &MainWindow::openQssFile);
+
+    QString aboutText = "<b><center>Witchy Qss Editor</center></b><br><br>";
+    aboutText +=
+        tr("This is experimental Qss editor and preview tool. Work in progress, feel free to report bugs on my github page.<br><br> ");
+    aboutText += tr("Author: DrBender<br>GitHub: <a "
+                    "href='https://github.com/DrBender/witchy-qss-editor'>https"
+                    "://github.com/DrBender/witchy-qss-editor</a><br><br>"
+                    "Email: drbenderdj@gmail.com ");
+    aboutText += "<br>Copyright &copy; 2024, DrBender. All rights reserved.";
+    connect(aboutAction, &QAction::triggered, this, [this, aboutText]()
+            { QMessageBox::about(this, "About", aboutText); });
+
+    connect(showColorsPreview, &QAction::triggered, this,
+            &MainWindow::showColorsPanel);
 }
 
 void MainWindow::setupEditorPanel()
@@ -191,6 +209,12 @@ void MainWindow::reformatQssFile()
     editor->setPlainText(text);
 }
 
+void MainWindow::showColorsPanel()
+{
+
+    qDebug() << "MainWindow::showColorsPanel()";
+}
+
 void MainWindow::saveSettings()
 {
     Settings &set = Settings::instance();
@@ -214,9 +238,9 @@ void MainWindow::loadSettings()
     qDebug() << "cur " << currentQssFilePath;
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        QMessageBox::warning(
-            this, "Error",
-            QString("Couldn't open file %1 for reading.").arg(currentQssFilePath));
+        QMessageBox::warning(this, "Error",
+                             QString("Couldn't open file %1 for reading.")
+                                 .arg(currentQssFilePath));
         return;
     }
     QTextStream in(&file);

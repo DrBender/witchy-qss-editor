@@ -25,6 +25,7 @@ public slots:
     void saveQssFile();
     void applyQssFile();
     void reformatQssFile();
+    void showColorsPanel();
 
 protected:
     QString windowTitle;
