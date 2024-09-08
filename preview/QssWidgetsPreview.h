@@ -2,10 +2,6 @@
 #ifndef QSSWIDGETSPREVIEW_H
 #define QSSWIDGETSPREVIEW_H
 
-#include "qobjectdefs.h"
-
-#include "qwidget.h"
-
 #include <QCalendarWidget>
 #include <QCheckBox>
 #include <QComboBox>

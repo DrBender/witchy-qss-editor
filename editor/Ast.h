@@ -2,9 +2,6 @@
 #ifndef AST_H
 #define AST_H
 
-#include "qchar.h"
-#include "qglobal.h"
-#include "qlist.h"
 #include <qt5/QtCore/qchar.h>
 #include <QDebug>
 #include <QString>

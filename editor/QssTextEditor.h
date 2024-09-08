@@ -2,8 +2,6 @@
 #ifndef QSSTEXTEDITOR_H
 #define QSSTEXTEDITOR_H
 
-#include "qevent.h"
-#include "qobjectdefs.h"
 #include <QPlainTextEdit>
 #include <qt5/QtCore/qobjectdefs.h>
 /*#include "LineNumberArea.h"*/

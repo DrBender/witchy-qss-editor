@@ -1,8 +1,6 @@
 #pragma once
 #ifndef SYNTAX_HIGHLIGHTER_H
 
-#include "qobjectdefs.h"
-#include "qsyntaxhighlighter.h"
 #include <QRegularExpression>
 #include <QSyntaxHighlighter>
 #include <QTextDocument>

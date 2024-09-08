@@ -1,12 +1,5 @@
 #include "MainWindow.h"
 #include "config/settings.h"
-#include "qboxlayout.h"
-#include "qchar.h"
-#include "qglobal.h"
-#include "qlocale.h"
-#include "qobjectdefs.h"
-#include "qpushbutton.h"
-#include "qwidget.h"
 #include <QCheckBox>
 #include <QDebug>
 #include <QFileDialog>

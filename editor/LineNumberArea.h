@@ -1,10 +1,7 @@
 #pragma once
 #ifndef LINENUMBERAREA_H
 #define LINENUMBERAREA_H
-#include "qevent.h"
-#include "qobjectdefs.h"
-#include "qwidget.h"
-#include <QWidget>
+
 #include "QssTextEditor.h"
 
 class LineNumberArea : public QWidget

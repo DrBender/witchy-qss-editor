@@ -1,6 +1,5 @@
 #include "Parser.h"
 #include "Ast.h"
-#include "qchar.h"
 #include <memory>
 
 Parser::Parser() { styleSheet = std::make_shared<StyleSheetNode>(); }

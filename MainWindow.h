@@ -1,11 +1,9 @@
 #pragma once
-#include "qchar.h"
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include "QssTextEditor.h"
 #include "QssWidgetsPreview.h"
-#include "qobjectdefs.h"
 #include <QMainWindow>
 
 class Session

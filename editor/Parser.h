@@ -2,7 +2,6 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-#include "qchar.h"
 #include "Ast.h"
 #include <QString>
 #include <QVector>

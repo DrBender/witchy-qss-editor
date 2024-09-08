@@ -1,7 +1,4 @@
 #include "SyntaxHighlighter.h"
-#include "qchar.h"
-#include "qfont.h"
-#include "qnamespace.h"
 #include <QFont>
 #include <QDebug>
 
