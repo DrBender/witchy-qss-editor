@@ -36,6 +36,7 @@ HEADERS += \
     editor/QssTextEditor.h 
     
 ######
+RESOURCES += res/res.qrc
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

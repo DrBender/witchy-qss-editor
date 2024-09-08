@@ -8,6 +8,13 @@
 QssTextEditor::QssTextEditor(QWidget *parent) : QPlainTextEdit(parent)
 {
     setPlainText("QssTextEditor");
+
+    QFile styleF;
+    styleF.setFileName(":/editor");
+    styleF.open(QFile::ReadOnly);
+    QString qssStr = styleF.readAll();
+    setStyleSheet(qssStr);
+
     lineNumberArea = new LineNumberArea(this);
     /*colorPreviewArea = new */
     connect(this, &QssTextEditor::blockCountChanged, this,
@@ -23,7 +30,7 @@ QssTextEditor::QssTextEditor(QWidget *parent) : QPlainTextEdit(parent)
     highlighter = new SyntaxHighlighter(this->document());
 
     connect(this, &QPlainTextEdit::textChanged, this,
-           &QssTextEditor::highlightColors);
+            &QssTextEditor::highlightColors);
 }
 
 QssTextEditor::~QssTextEditor() { qDebug() << "Destructor"; }
@@ -119,7 +126,7 @@ void QssTextEditor::drawColorPreview(QPainter &painter, const QString &text,
         if (color.isValid())
         {
             QRect colorRect(viewport()->width() - 30, yPosition, 20,
-                            20); // Позиция и размер квадрата
+                            20); // Position and square size
             painter.fillRect(colorRect, color);
             painter.drawRect(colorRect);
         }

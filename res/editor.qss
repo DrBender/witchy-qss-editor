@@ -1,0 +1,73 @@
+QPlainTextEdit {
+    background-color: #f5f5f5;
+    color: #333333;
+    font-family: "Courier New";
+    font-size: 14px;
+    border: 2px solid #007ACC;
+    border-radius: 5px;
+    padding: 5px;
+    selection-background-color: #007ACC;
+    selection-color: white;
+}
+
+QPlainTextEdit::selection {
+    background-color: #007ACC;
+    color: white;
+}
+
+QScrollBar:vertical {
+    background: #E5E5E5;
+    width: 12px;
+    margin: 0px 0px 0px 0px;
+    border: 1px solid #D4D4D4;
+}
+
+QScrollBar::handle:vertical {
+    background: #B3B3B3;
+    min-height: 20px;
+    border-radius: 5px;
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    background: #E5E5E5;
+    height: 0px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: #A3A3A3;
+}
+
+QScrollBar:horizontal {
+    background: #E5E5E5;
+    height: 12px;
+    margin: 0px 0px 0px 0px;
+    border: 1px solid #D4D4D4;
+}
+
+QScrollBar::handle:horizontal {
+    background: #B3B3B3;
+    min-width: 20px;
+    border-radius: 5px;
+}
+
+QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {
+    background: #E5E5E5;
+    width: 0px;
+}
+
+QScrollBar::handle:horizontal:hover {
+    background: #A3A3A3;
+}
+
+QPlainTextEdit::cursor {
+    background-color: #FF0000;
+}
+
+QToolTip {
+    background-color: #FFFFCC;
+    color: black;
+    border: 1px solid black;
+    padding: 3px;
+    border-radius: 3px;
+}
+

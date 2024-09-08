@@ -87,7 +87,8 @@ void MainWindow::setupMenuBar()
 
     QString aboutText = "<b><center>Witchy Qss Editor</center></b><br><br>";
     aboutText +=
-        tr("This is experimental Qss editor and preview tool. Work in progress, feel free to report bugs on my github page.<br><br> ");
+        tr("This is experimental Qss editor and preview tool. Work in "
+           "progress, feel free to report bugs on my github page.<br><br> ");
     aboutText += tr("Author: DrBender<br>GitHub: <a "
                     "href='https://github.com/DrBender/witchy-qss-editor'>https"
                     "://github.com/DrBender/witchy-qss-editor</a><br><br>"
