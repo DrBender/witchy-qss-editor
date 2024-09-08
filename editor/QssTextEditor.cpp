@@ -125,8 +125,12 @@ void QssTextEditor::drawColorPreview(QPainter &painter, const QString &text,
 
         if (color.isValid())
         {
-            QRect colorRect(viewport()->width() - 30, yPosition, 20,
-                            20); // Position and square size
+            int square_size = fontMetrics().height() - 4;
+            if (square_size < 0)
+                square_size = 1;
+            QRect colorRect(viewport()->width() - 30, yPosition + 1, square_size,
+                            square_size);
+
             painter.fillRect(colorRect, color);
             painter.drawRect(colorRect);
         }
