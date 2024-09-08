@@ -63,11 +63,11 @@ jobs:
       with:
         version: ${{ matrix.qt_version }}
     
-    - name: Install CMake on Windows
-      if: matrix.os == 'windows-latest'
-      uses: chrislennon/action-install-cmake@v1.2.0
-      with:
-        cmake-version: '3.21.1'  
+#    - name: Install CMake on Windows
+ #     if: matrix.os == 'windows-latest'
+  #    uses: chrislennon/action-install-cmake@v1.2.0
+   #   with:
+    #    cmake-version: '3.21.1'  
         
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
