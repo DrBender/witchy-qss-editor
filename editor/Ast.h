@@ -2,7 +2,6 @@
 #ifndef AST_H
 #define AST_H
 
-#include <qt5/QtCore/qchar.h>
 #include <QDebug>
 #include <QString>
 #include <QTextStream>

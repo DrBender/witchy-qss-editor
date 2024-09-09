@@ -3,8 +3,6 @@
 #define QSSTEXTEDITOR_H
 
 #include <QPlainTextEdit>
-#include <qt5/QtCore/qobjectdefs.h>
-/*#include "LineNumberArea.h"*/
 #include "Parser.h"
 #include "SyntaxHighlighter.h"
 
