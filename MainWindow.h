@@ -1,4 +1,6 @@
 #pragma once
+#include <qchar.h>
+#include <qfileinfo.h>
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -9,6 +11,26 @@
 class Session
 {
     QString currentFilePath;
+    QFileInfo info;
+
+public:
+    Session() : currentFilePath(""), info("") {}
+    void setCurrentFilePath(const QString &path)
+    {
+        if (QFileInfo(path).exists())
+        {
+            currentFilePath = path;
+            info = QFileInfo(currentFilePath);
+        }
+        else
+        {
+            qDebug() << "Session: file path " << path << " doesn't exist";
+        }
+    }
+    QString fileName() { return info.fileName(); }
+    QString currentDir() { return info.path(); }
+    QString getCurrentFilePath() { return currentFilePath; }
+    /*void closeCurrentFile();*/
 };
 
 class MainWindow : public QMainWindow
@@ -19,11 +41,15 @@ public:
     MainWindow();
     ~MainWindow();
 public slots:
+
+    void openNewFile();
     void openQssFile();
     void saveQssFile();
     void applyQssFile();
     void reformatQssFile();
     void showColorsPanel();
+    void saveSettings();
+    void loadSettings();
 
 protected:
     QString windowTitle;
@@ -31,15 +57,13 @@ protected:
     QssWidgetsPreview *elementsPanel;
 
     QssTextEditor *editor;
-    QString currentQssFilePath;
+
+    Session session;
 
     void setTexts();
     void setupMenuBar();
     void setupEditorPanel();
     void setupElementsPanel();
-
-    void saveSettings();
-    void loadSettings();
 
     void closeEvent(QCloseEvent *event) override;
 };

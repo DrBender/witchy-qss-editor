@@ -1,12 +1,13 @@
 #include "settings.h"
 #include <QSettings>
+#include <qsettings.h>
 
-Settings::Settings() { settingsFile = "config.ini"; }
+Settings::Settings() : settings("DrBender", "Witchy Qss Editor")
+{
+}
 
 void Settings::loadSettings()
 {
-    QSettings settings(settingsFile, QSettings::IniFormat);
-
     settings.beginGroup("Window");
     win_width = settings.value("width", 960).toInt();
     win_height = settings.value("height", 560).toInt();
@@ -19,8 +20,6 @@ void Settings::loadSettings()
 
 void Settings::saveSettings()
 {
-    QSettings settings(settingsFile, QSettings::IniFormat);
-
     settings.beginGroup("Window");
     settings.setValue("width", win_width);
     settings.setValue("height", win_height);

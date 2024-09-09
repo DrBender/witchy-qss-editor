@@ -15,9 +15,9 @@ MainWindow::MainWindow()
 
     setGeometry(QRect(100, 100, 960, 560));
     windowTitle = "Witchy Qss Editor";
-    
+    saveGeometry();
+    saveState();
     /*setWindowFlags(Qt::FramelessWindowHint);*/
-    currentQssFilePath = "";
     QWidget *central_widget = new QWidget(this);
     QFrame *background_app = new QFrame(central_widget);
     background_app->setFrameShape(QFrame::NoFrame);
@@ -75,8 +75,7 @@ void MainWindow::setupMenuBar()
     QAction *aboutAction = helpMenu->addAction("About");
 
     /*QToolBar * toolBar = this->toolBar*/
-    connect(newAction, &QAction::triggered, this, []()
-            { QMessageBox::information(nullptr, "Action", "New selected"); });
+    connect(newAction, &QAction::triggered, this, &MainWindow::openNewFile);
     connect(openAction, &QAction::triggered, this, &MainWindow::openQssFile);
 
     QString aboutText = "<b><center>Witchy Qss Editor</center></b><br><br>";
@@ -128,7 +127,17 @@ void MainWindow::setupEditorPanel()
 }
 void MainWindow::setupElementsPanel() {}
 void MainWindow::setTexts() {}
+void MainWindow::openNewFile()
+{
+    qDebug() << "openNewFile";
+    // TODO:
+    // 1.save file
+    // 2. set new file name 
+    editor->clear();
+    qDebug() << QDir::currentPath() + "new.qss";
 
+    session.setCurrentFilePath(QDir::currentPath() + "new.qss");
+}
 void MainWindow::openQssFile()
 {
     qDebug() << "open Qss File";
@@ -141,8 +150,8 @@ void MainWindow::openQssFile()
     }
 
     QFile file(fileName);
-    currentQssFilePath = fileName;
-    QString name = QFileInfo(currentQssFilePath).fileName();
+    session.setCurrentFilePath(fileName);
+    QString name = session.fileName();
     this->setWindowTitle(windowTitle + " - " + name);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
@@ -171,7 +180,8 @@ void MainWindow::saveQssFile()
     }
 
     QFile file(fileName);
-    currentQssFilePath = fileName;
+    session.setCurrentFilePath(fileName);
+
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         QMessageBox::warning(this, "Error", "Couldn't open file for writing.");
@@ -215,27 +225,29 @@ void MainWindow::saveSettings()
     Settings &set = Settings::instance();
     set.win_width = this->width();
     set.win_height = this->height();
-    set.lastFile = currentQssFilePath;
+    set.lastFile = session.getCurrentFilePath();
     set.saveSettings();
 }
 
 void MainWindow::loadSettings()
 {
-    Settings &set = Settings::instance();
-    set.loadSettings();
+    Settings &settings = Settings::instance();
+    settings.loadSettings();
 
-    currentQssFilePath = set.lastFile;
-    if (currentQssFilePath.isEmpty())
+    if (settings.lastFile.isEmpty())
     {
         return;
     }
-    QFile file(currentQssFilePath);
-    qDebug() << "cur " << currentQssFilePath;
+
+    session.setCurrentFilePath(settings.lastFile);
+    QFile file(session.getCurrentFilePath());
+    qDebug() << "Session info";
+    qDebug() << session.fileName() << " " << session.currentDir();
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         QMessageBox::warning(this, "Error",
                              QString("Couldn't open file %1 for reading.")
-                                 .arg(currentQssFilePath));
+                                 .arg(session.getCurrentFilePath()));
         return;
     }
     QTextStream in(&file);

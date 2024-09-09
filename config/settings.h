@@ -2,6 +2,7 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 #include <QString>
+#include <QSettings>
 
 class Settings
 {
@@ -12,6 +13,7 @@ private:
     Settings &operator=(const Settings &) = delete;
     Settings(Settings &&) = delete;
     Settings &operator=(Settings &&) = delete;
+    QSettings settings;
 
 public:
     static Settings &instance()
@@ -19,6 +21,7 @@ public:
         static Settings p_instance;
         return p_instance;
     }
+
     QString settingsFile;
     int win_width, win_height;
     QString lastFile;

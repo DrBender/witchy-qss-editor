@@ -15,6 +15,8 @@ find_package(
   COMPONENTS Core Widgets
   REQUIRED)
 
+message(STATUS "Qt version: ${Qt5Core_VERSION}")
+
 set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build_cmake)
 # Compile command export for clangd
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
