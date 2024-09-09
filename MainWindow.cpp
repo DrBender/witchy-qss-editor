@@ -57,6 +57,8 @@ MainWindow::~MainWindow() {}
 
 void MainWindow::setupMenuBar()
 {
+    QToolBar *toolbar = new QToolBar("Main Toolbar", this);
+
     QMenuBar *menuBar = this->menuBar();
     QMenu *fileMenu = menuBar->addMenu("&File");
     QAction *newAction = fileMenu->addAction("New");
@@ -73,6 +75,10 @@ void MainWindow::setupMenuBar()
 
     QMenu *helpMenu = menuBar->addMenu("&Help");
     QAction *aboutAction = helpMenu->addAction("About");
+
+    toolbar->addAction(newAction);
+    toolbar->addAction(openAction);
+    addToolBar(toolbar);
 
     /*QToolBar * toolBar = this->toolBar*/
     connect(newAction, &QAction::triggered, this, &MainWindow::openNewFile);
