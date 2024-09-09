@@ -26,7 +26,7 @@ QssTextEditor::QssTextEditor(QWidget *parent) : QPlainTextEdit(parent)
 
     updateLineNumberAreaWidth(0);
     highlightCurrentLine();
-
+    highlightColorsOn = false;
     highlighter = new SyntaxHighlighter(this->document());
 
     connect(this, &QPlainTextEdit::textChanged, this,
@@ -78,6 +78,12 @@ int QssTextEditor::lineNumberAreaWidth()
     return space;
 }
 
+void QssTextEditor::setColorsHighlight(bool highlight)
+{
+    highlightColorsOn = highlight;
+    highlightColors();
+}
+
 void QssTextEditor::resizeEvent(QResizeEvent *e)
 {
     QPlainTextEdit::resizeEvent(e);
@@ -89,7 +95,8 @@ void QssTextEditor::resizeEvent(QResizeEvent *e)
 void QssTextEditor::paintEvent(QPaintEvent *event)
 {
     QPlainTextEdit::paintEvent(event);
-
+    if (!highlightColorsOn)
+        return;
     QPainter painter(viewport());
 
     QTextBlock block = firstVisibleBlock();
@@ -128,8 +135,8 @@ void QssTextEditor::drawColorPreview(QPainter &painter, const QString &text,
             int square_size = fontMetrics().height() - 4;
             if (square_size < 0)
                 square_size = 1;
-            QRect colorRect(viewport()->width() - 30, yPosition + 1, square_size,
-                            square_size);
+            QRect colorRect(viewport()->width() - 30, yPosition + 1,
+                            square_size, square_size);
 
             painter.fillRect(colorRect, color);
             painter.drawRect(colorRect);

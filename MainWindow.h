@@ -47,7 +47,7 @@ public slots:
     void saveQssFile();
     void applyQssFile();
     void reformatQssFile();
-    void showColorsPanel();
+    void showColorsPanel(bool checked);
     void saveSettings();
     void loadSettings();
 

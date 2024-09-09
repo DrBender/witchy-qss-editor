@@ -132,7 +132,7 @@ void MainWindow::openNewFile()
     qDebug() << "openNewFile";
     // TODO:
     // 1.save file
-    // 2. set new file name 
+    // 2. set new file name
     editor->clear();
     qDebug() << QDir::currentPath() + "new.qss";
 
@@ -214,19 +214,18 @@ void MainWindow::reformatQssFile()
     editor->setPlainText(text);
 }
 
-void MainWindow::showColorsPanel()
+void MainWindow::showColorsPanel(bool checked)
 {
-
-    qDebug() << "MainWindow::showColorsPanel()";
+    editor->setColorsHighlight(checked);
 }
 
 void MainWindow::saveSettings()
 {
-    Settings &set = Settings::instance();
-    set.win_width = this->width();
-    set.win_height = this->height();
-    set.lastFile = session.getCurrentFilePath();
-    set.saveSettings();
+    Settings &settings = Settings::instance();
+    settings.win_width = this->width();
+    settings.win_height = this->height();
+    settings.lastFile = session.getCurrentFilePath();
+    settings.saveSettings();
 }
 
 void MainWindow::loadSettings()

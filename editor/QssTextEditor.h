@@ -17,9 +17,11 @@ public:
 
     void lineNumberAreaPaintEvent(QPaintEvent *ev);
     int lineNumberAreaWidth();
+    void setColorsHighlight(bool highlight);
     Parser parser;
 
 protected:
+    bool highlightColorsOn;
     void resizeEvent(QResizeEvent *e) override;
     void paintEvent(QPaintEvent *event) override;
 
