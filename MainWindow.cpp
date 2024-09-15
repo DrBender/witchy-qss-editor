@@ -9,7 +9,6 @@
 #include <QSettings>
 #include <QSplitter>
 #include <QVBoxLayout>
-#include <qpushbutton.h>
 
 MainWindow::MainWindow()
 {
@@ -147,7 +146,7 @@ void MainWindow::openNewFile()
     editor->clear();
     qDebug() << QDir::currentPath() + "new.qss";
 
-    session.setCurrentFilePath(QDir::currentPath() + "new.qss");
+    session.setCurrentFilePath(QDir::currentPath() + "/new.qss");
 }
 void MainWindow::openQssFile()
 {
