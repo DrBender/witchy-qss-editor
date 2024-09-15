@@ -18,6 +18,7 @@
 #include <QProgressBar>
 #include <QPushButton>
 #include <QRadioButton>
+#include <QScrollArea>
 #include <QSpinBox>
 #include <QTabWidget>
 #include <QTableView>
@@ -26,7 +27,6 @@
 #include <QToolBar>
 #include <QTreeView>
 #include <QTreeWidget>
-#include <QScrollArea>
 
 class QssWidgetsPreview : public QWidget
 {
@@ -40,6 +40,7 @@ public:
     void setupSimpleWidgets();
     void setupTreeWidgets();
     void setupTextEditWidgets();
+    void setupTableWidgets();
     void setupListWidgets();
     void setTexts();
     void populateTree(QTreeWidgetItem *parent, const QString &path);
@@ -48,10 +49,11 @@ protected:
     QMdiArea *testMdiArea;
     QMdiSubWindow *testSubWindow;
 
-    QScrollArea * scrollArea;
+    QScrollArea *scrollArea;
     QWidget *simpleWidgets;
     QWidget *treeWidgets;
     QWidget *textEditWidgets;
+    QWidget *tableWidgets;
     QWidget *listWidgets;
 
     QGroupBox *checkGroup;

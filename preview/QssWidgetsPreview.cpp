@@ -5,6 +5,7 @@
 #include <QFileSystemModel>
 #include <QMessageBox>
 #include <QScrollArea>
+#include <QStandardItemModel>
 #include <QStringListModel>
 #include <QVBoxLayout>
 
@@ -25,8 +26,7 @@ QssWidgetsPreview::QssWidgetsPreview(QWidget *parent) : QWidget(parent)
     testSubWindow->setWindowIcon(QIcon(pix));
     testSubWindow->setWindowTitle("");
     // temporarily hide close and minimize button
-    testSubWindow->setWindowFlags(Qt::Window  |
-                                  Qt::WindowMaximizeButtonHint);
+    testSubWindow->setWindowFlags(Qt::Window | Qt::WindowMaximizeButtonHint);
 
     testCheckBox_1 = new QCheckBox(this);
     testCheckBox_2 = new QCheckBox(this);
@@ -97,8 +97,8 @@ void QssWidgetsPreview::setupWidgetsLayout()
     setupSimpleWidgets();
     setupTreeWidgets();
     setupTextEditWidgets();
+    setupTableWidgets();
     setupListWidgets();
-    QWidget *tableWidgets = new QWidget(testTabWidget);
 
     testTabWidget->clear();
     testTabWidget->addTab(scrollArea, "Simple Widgets");
@@ -106,8 +106,6 @@ void QssWidgetsPreview::setupWidgetsLayout()
     testTabWidget->addTab(textEditWidgets, "Text Edit");
     testTabWidget->addTab(tableWidgets, "Table Widgets");
     testTabWidget->addTab(listWidgets, "List Widgets");
-    /*QScrollBar * test*/
-    // QScrollArea
     // QToolButton
     // QTabBar
     // QToolTip
@@ -120,10 +118,6 @@ void QssWidgetsPreview::setupWidgetsLayout()
     // QDialogButtonBox
     internal_layout->addWidget(testMenuBar);
     internal_layout->addWidget(testTabWidget);
-
-    tableWidgets->setLayout(new QVBoxLayout(internalWidget));
-    tableWidgets->layout()->addWidget(testTableView);
-    tableWidgets->layout()->addWidget(testTableWidget);
 
     internalWidget->setLayout(internal_layout);
     /*this->setLayout(v_ly);*/
@@ -239,6 +233,44 @@ void QssWidgetsPreview::setupTextEditWidgets()
 
     testTextEdit->setText(text);
     testPlainTextEdit->setPlainText(text);
+}
+
+void QssWidgetsPreview::setupTableWidgets()
+{
+
+    tableWidgets = new QWidget(testTabWidget);
+
+    tableWidgets->setLayout(new QVBoxLayout(testTabWidget));
+    tableWidgets->layout()->addWidget(testTableView);
+    tableWidgets->layout()->addWidget(testTableWidget);
+
+    size_t table_size = 10;
+    testTableWidget->setRowCount(table_size);
+    testTableWidget->setColumnCount(table_size);
+
+    for (int i = 0; i < table_size; ++i)
+        for (int j = 0; j < table_size; ++j)
+        {
+            QTableWidgetItem *newItem =
+                new QTableWidgetItem(tr("%1").arg((i + 1) * (j + 1)));
+            testTableWidget->setItem(i, j, newItem);
+        }
+
+    QStandardItemModel *model = new QStandardItemModel(table_size, table_size);
+    for (int i = 0; i < table_size; ++i)
+    {
+        model->setHorizontalHeaderItem(
+            i, new QStandardItem(QString("%1").arg(i + 1)));
+        for (int j = 0; j < table_size; ++j)
+        {
+            QStandardItem *item =
+                new QStandardItem(QString("%1").arg((i + 1) * (j + 1)));
+            model->setItem(i, j, item);
+        }
+    }
+
+    testTableView->setModel(model);
+    testTableView->show();
 }
 
 void QssWidgetsPreview::setupListWidgets()
