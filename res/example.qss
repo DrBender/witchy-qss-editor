@@ -1,6 +1,60 @@
-
-
-QWidget{
-color : #8bf;
-        background-color: #eeeeee;
+QWidget {
+    color: #c6d0f5;
+    background-color: #303446;
 }
+
+QScrollBar:vertical {
+    background: #303446;
+    width: 12px;
+    margin: 0px 0px 0px 0px;
+    border: 1px solid #232634;
+    border-radius: 5px;
+}
+
+QScrollBar::handle:vertical {
+    background: #99d1db;
+    min-height: 20px;
+    border-radius: 5px;
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    background: #E5E5E5;
+    height: 0px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: #81c8be;
+}
+
+
+QProgressBar {
+    border: 2px solid #232634;
+    border-radius: 5px;
+    text-align: center;
+    background-color: #51576d;
+    padding: 2px;
+    font-size: 12pt;
+    color: #c6d0f5;
+}
+
+QProgressBar::chunk {
+    background-color: #CD96CD;
+    width: 20px;
+    margin: 1px;
+    border-radius: 4px;
+    border: 1px solid #CD96CD;
+}
+
+QProgressBar[orientation="horizontal"] {
+    min-height: 30px;
+    max-height: 30px;
+}
+
+QProgressBar[textVisible="true"] {
+    color: #c6d0f5;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding-right: 5px;
+}
+

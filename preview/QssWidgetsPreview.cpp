@@ -4,10 +4,11 @@
 #include <QDirIterator>
 #include <QFileSystemModel>
 #include <QMessageBox>
+#include <QScrollArea>
 #include <QStringListModel>
 #include <QVBoxLayout>
-#include <QScrollArea>
 #include <qboxlayout.h>
+#include <qnamespace.h>
 
 QssWidgetsPreview::QssWidgetsPreview(QWidget *parent) : QWidget(parent)
 {
@@ -18,7 +19,17 @@ QssWidgetsPreview::QssWidgetsPreview(QWidget *parent) : QWidget(parent)
     testSubWindow = new QMdiSubWindow();
 
     testMdiArea->addSubWindow(testSubWindow);
+    // settings for MDI Sub Window
     testSubWindow->showMaximized();
+    // hide qt icon
+    QPixmap pix{1, 1};
+    pix.fill(Qt::transparent);
+    testSubWindow->setWindowIcon(QIcon(pix));
+    testSubWindow->setWindowTitle("");
+    // temporarily hide close and minimize button
+    testSubWindow->setWindowFlags(Qt::Window  |
+                                  Qt::WindowMaximizeButtonHint);
+
     testCheckBox_1 = new QCheckBox(this);
     testCheckBox_2 = new QCheckBox(this);
     testCheckBox_3 = new QCheckBox(this);
