@@ -9,6 +9,7 @@
 #include <QSettings>
 #include <QSplitter>
 #include <QVBoxLayout>
+#include <qpushbutton.h>
 
 MainWindow::MainWindow()
 {
@@ -110,16 +111,19 @@ void MainWindow::setupEditorPanel()
     QPushButton *open = new QPushButton(editorPanel);
     QPushButton *save = new QPushButton(editorPanel);
     QPushButton *apply_style = new QPushButton(editorPanel);
+    QPushButton *clear_slyle = new QPushButton(editorPanel);
     QPushButton *reformat = new QPushButton(editorPanel);
 
     open->setText(tr("Open"));
     save->setText(tr("Save"));
     apply_style->setText(tr("Apply Style"));
+    clear_slyle->setText(tr("Clear Style"));
     reformat->setText(tr("Reformat"));
 
     pbPanel->layout()->addWidget(open);
     pbPanel->layout()->addWidget(save);
     pbPanel->layout()->addWidget(apply_style);
+    pbPanel->layout()->addWidget(clear_slyle);
     pbPanel->layout()->addWidget(reformat);
 
     editorPanel->layout()->addWidget(pbPanel);
@@ -128,6 +132,7 @@ void MainWindow::setupEditorPanel()
     connect(open, SIGNAL(clicked()), this, SLOT(openQssFile()));
     connect(save, SIGNAL(clicked()), this, SLOT(saveQssFile()));
     connect(apply_style, SIGNAL(clicked()), this, SLOT(applyQssFile()));
+    connect(clear_slyle, &QPushButton::clicked, this, &MainWindow::clearWidgetsQss);
     connect(reformat, &QPushButton::clicked, this,
             &MainWindow::reformatQssFile);
 }
@@ -211,6 +216,8 @@ void MainWindow::applyQssFile()
 
     editor->parser.parse(copy_text);
 }
+
+void MainWindow::clearWidgetsQss() { elementsPanel->setStyleSheet(""); }
 
 void MainWindow::reformatQssFile()
 {

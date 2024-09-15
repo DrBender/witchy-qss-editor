@@ -1,5 +1,7 @@
 QWidget {
     color: #c6d0f5;
+    font-family: "Courier New";
+    font-size: 14px;
     background-color: #303446;
 }
 

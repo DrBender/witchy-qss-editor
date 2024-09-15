@@ -7,8 +7,6 @@
 #include <QScrollArea>
 #include <QStringListModel>
 #include <QVBoxLayout>
-#include <qboxlayout.h>
-#include <qnamespace.h>
 
 QssWidgetsPreview::QssWidgetsPreview(QWidget *parent) : QWidget(parent)
 {
