@@ -61,8 +61,10 @@ void MainWindow::setupMenuBar()
 
     QMenuBar *menuBar = this->menuBar();
     QMenu *fileMenu = menuBar->addMenu("&File");
-    QAction *newAction = fileMenu->addAction("New");
-    QAction *openAction = fileMenu->addAction("Open");
+    QAction *newAction = fileMenu->addAction(this->style()->standardIcon(QStyle::SP_FileIcon), "New");
+    QAction *openAction = fileMenu->addAction(this->style()->standardIcon(QStyle::SP_DirOpenIcon),"Open");
+    QAction *saveAction = fileMenu->addAction(this->style()->standardIcon(QStyle::SP_DriveFDIcon),"Save");
+    /*QAction *saveAction = fileMenu->addAction(this->style()->standardIcon(QStyle::SP_DialogSaveButton),"Save");*/
 
     QMenu *editMenu = menuBar->addMenu("&Edit");
     QAction *cutAction = editMenu->addAction("Cut");
@@ -74,15 +76,17 @@ void MainWindow::setupMenuBar()
     showColorsPreview->setCheckable(true);
 
     QMenu *helpMenu = menuBar->addMenu("&Help");
-    QAction *aboutAction = helpMenu->addAction("About");
+    QAction *aboutAction = helpMenu->addAction(this->style()->standardIcon(QStyle::SP_MessageBoxInformation), "About");
 
     toolbar->addAction(newAction);
     toolbar->addAction(openAction);
+    toolbar->addAction(saveAction);
     addToolBar(toolbar);
 
     /*QToolBar * toolBar = this->toolBar*/
     connect(newAction, &QAction::triggered, this, &MainWindow::openNewFile);
     connect(openAction, &QAction::triggered, this, &MainWindow::openQssFile);
+    connect(saveAction, &QAction::triggered, this, &MainWindow::saveQssFile);
 
     QString aboutText = "<b><center>Witchy Qss Editor</center></b><br><br>";
     aboutText +=
@@ -107,20 +111,14 @@ void MainWindow::setupEditorPanel()
 
     QWidget *pbPanel = new QWidget(editorPanel);
     pbPanel->setLayout(new QHBoxLayout(editorPanel));
-    QPushButton *open = new QPushButton(editorPanel);
-    QPushButton *save = new QPushButton(editorPanel);
     QPushButton *apply_style = new QPushButton(editorPanel);
     QPushButton *clear_slyle = new QPushButton(editorPanel);
     QPushButton *reformat = new QPushButton(editorPanel);
 
-    open->setText(tr("Open"));
-    save->setText(tr("Save"));
     apply_style->setText(tr("Apply Style"));
     clear_slyle->setText(tr("Clear Style"));
     reformat->setText(tr("Reformat"));
 
-    pbPanel->layout()->addWidget(open);
-    pbPanel->layout()->addWidget(save);
     pbPanel->layout()->addWidget(apply_style);
     pbPanel->layout()->addWidget(clear_slyle);
     pbPanel->layout()->addWidget(reformat);
@@ -128,8 +126,6 @@ void MainWindow::setupEditorPanel()
     editorPanel->layout()->addWidget(pbPanel);
     editorPanel->layout()->addWidget(editor);
 
-    connect(open, SIGNAL(clicked()), this, SLOT(openQssFile()));
-    connect(save, SIGNAL(clicked()), this, SLOT(saveQssFile()));
     connect(apply_style, SIGNAL(clicked()), this, SLOT(applyQssFile()));
     connect(clear_slyle, &QPushButton::clicked, this, &MainWindow::clearWidgetsQss);
     connect(reformat, &QPushButton::clicked, this,
