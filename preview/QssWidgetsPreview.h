@@ -26,6 +26,7 @@
 #include <QToolBar>
 #include <QTreeView>
 #include <QTreeWidget>
+#include <QScrollArea>
 
 class QssWidgetsPreview : public QWidget
 {
@@ -46,6 +47,8 @@ public:
 protected:
     QMdiArea *testMdiArea;
     QMdiSubWindow *testSubWindow;
+
+    QScrollArea * scrollArea;
     QWidget *simpleWidgets;
     QWidget *treeWidgets;
     QWidget *textEditWidgets;

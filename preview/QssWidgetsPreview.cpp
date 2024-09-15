@@ -6,6 +6,8 @@
 #include <QMessageBox>
 #include <QStringListModel>
 #include <QVBoxLayout>
+#include <QScrollArea>
+#include <qboxlayout.h>
 
 QssWidgetsPreview::QssWidgetsPreview(QWidget *parent) : QWidget(parent)
 {
@@ -90,7 +92,7 @@ void QssWidgetsPreview::setupWidgetsLayout()
     QWidget *tableWidgets = new QWidget(testTabWidget);
 
     testTabWidget->clear();
-    testTabWidget->addTab(simpleWidgets, "Simple Widgets");
+    testTabWidget->addTab(scrollArea, "Simple Widgets");
     testTabWidget->addTab(treeWidgets, "Tree Widgets");
     testTabWidget->addTab(textEditWidgets, "Text Edit");
     testTabWidget->addTab(tableWidgets, "Table Widgets");
@@ -122,11 +124,14 @@ void QssWidgetsPreview::setupWidgetsLayout()
 void QssWidgetsPreview::setupSimpleWidgets()
 {
 
-    simpleWidgets = new QWidget(testTabWidget);
-
+    scrollArea = new QScrollArea(testTabWidget);
+    scrollArea->setLayout(new QVBoxLayout(scrollArea));
+    simpleWidgets = new QWidget(scrollArea);
+    scrollArea->setWidget(simpleWidgets);
+    scrollArea->setWidgetResizable(true);
     /*QVBoxLayout *v_ly = new QVBoxLayout(internalWidget);*/
 
-    QVBoxLayout *v_ly = new QVBoxLayout(testTabWidget);
+    QVBoxLayout *v_ly = new QVBoxLayout(simpleWidgets);
     radioGroup = new QGroupBox(testTabWidget);
     radioGroup->setLayout(new QVBoxLayout);
 
