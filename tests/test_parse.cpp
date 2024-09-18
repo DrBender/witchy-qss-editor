@@ -1,5 +1,6 @@
 #include <QDebug>
 #include <QTest>
+#include <qtestcase.h>
 
 #include "../editor/Parser.h"
 
@@ -26,6 +27,7 @@ void ParseTest::testSelectors()
     Parser p;
     QString str = "QProgressBar{}";
     p.parse(str);
+    QVERIFY(p.parsed_text == "QProgressBar {\n}\n\n");
 }
 
 QTEST_APPLESS_MAIN(ParseTest)

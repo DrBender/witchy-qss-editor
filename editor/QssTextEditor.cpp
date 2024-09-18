@@ -119,6 +119,17 @@ void QssTextEditor::paintEvent(QPaintEvent *event)
         ++blockNumber;
     }
 }
+
+void QssTextEditor::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Tab)
+    {
+        insertPlainText("    ");
+        return;
+    }
+    QPlainTextEdit::keyPressEvent(event);
+}
+
 void QssTextEditor::drawColorPreview(QPainter &painter, const QString &text,
                                      int yPosition)
 {

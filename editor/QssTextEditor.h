@@ -2,9 +2,9 @@
 #ifndef QSSTEXTEDITOR_H
 #define QSSTEXTEDITOR_H
 
-#include <QPlainTextEdit>
 #include "Parser.h"
 #include "SyntaxHighlighter.h"
+#include <QPlainTextEdit>
 
 class QssTextEditor : public QPlainTextEdit
 {
@@ -24,6 +24,7 @@ protected:
     bool highlightColorsOn;
     void resizeEvent(QResizeEvent *e) override;
     void paintEvent(QPaintEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
 
 private:
     QWidget *lineNumberArea;
