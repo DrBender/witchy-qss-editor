@@ -1,5 +1,19 @@
-#include "test_parse.h"
-#include <qt5/QtCore/qglobal.h>
+#include <QDebug>
+#include <QTest>
+
+#include "../editor/Parser.h"
+
+
+class ParseTest : public QObject
+{
+    Q_OBJECT
+
+private slots:
+
+    void initTestCase(); 
+    void testSelectors();
+
+};
 
 void ParseTest::initTestCase()
 {
@@ -9,8 +23,10 @@ void ParseTest::initTestCase()
 void ParseTest::testSelectors()
 {
     QCOMPARE(5, 5);
-    QCOMPARE(4, 5);
+    Parser p;
+    QString str = "QProgressBar{}";
+    p.parse(str);
 }
 
-QTEST_MAIN(ParseTest)
-#include "build/moc/test_parse.moc"
+QTEST_APPLESS_MAIN(ParseTest)
+#include "test_parse.moc"

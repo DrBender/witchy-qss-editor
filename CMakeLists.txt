@@ -48,11 +48,14 @@ target_include_directories(qss_editor PRIVATE editor preview config res)
 
 target_link_libraries(qss_editor Qt5::Widgets)
 
-# add_custom_target(
-#   copy_compile_commands ALL
-#   COMMAND
-#     ${CMAKE_COMMAND} -E copy_if_different
-#     ${CMAKE_BINARY_DIR}/compile_commands.json
-#     ${COMPILE_COMMANDS_OUTPUT_DIR}/compile_commands.json
-#   DEPENDS ${CMAKE_BINARY_DIR}/compile_commands.json
-#   COMMENT "Coping compile_commands.json")
+add_subdirectory(tests)
+
+add_custom_target(
+  copy_compile_commands ALL
+  COMMAND
+    ${CMAKE_COMMAND} -E copy_if_different
+    ${CMAKE_BINARY_DIR}/compile_commands.json
+    ${COMPILE_COMMANDS_OUTPUT_DIR}/compile_commands.json
+  DEPENDS ${CMAKE_BINARY_DIR}/compile_commands.json
+  COMMENT "Coping compile_commands.json")
+

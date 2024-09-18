@@ -5,7 +5,17 @@ QWidget {
     background-color: #303446;
 }
 
-QScrollBar:vertical {
+QScrollBar:horizontal
+{
+    background: #303446;
+    height: 12px;
+    margin: 0px 0px 0px 0px;
+    border: 1px solid #232634;
+    border-radius: 5px;
+} 
+
+QScrollBar:vertical 
+{
     background: #303446;
     width: 12px;
     margin: 0px 0px 0px 0px;
@@ -13,18 +23,25 @@ QScrollBar:vertical {
     border-radius: 5px;
 }
 
-QScrollBar::handle:vertical {
+QScrollBar::handle:vertical, 
+QScrollBar::handle:horizontal 
+{
     background: #99d1db;
     min-height: 20px;
     border-radius: 5px;
 }
 
-QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+QScrollBar::add-line:vertical, 
+QScrollBar::sub-line:vertical,
+QScrollBar::add-line:horizontal, 
+QScrollBar::sub-line:horizontal 
+{
     background: #E5E5E5;
     height: 0px;
 }
 
-QScrollBar::handle:vertical:hover {
+QScrollBar::handle:vertical:hover,
+QScrollBar::handle:horizontal:hover {
     background: #81c8be;
 }
 
