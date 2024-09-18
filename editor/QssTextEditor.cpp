@@ -31,6 +31,10 @@ QssTextEditor::QssTextEditor(QWidget *parent) : QPlainTextEdit(parent)
 
     connect(this, &QPlainTextEdit::textChanged, this,
             &QssTextEditor::highlightColors);
+
+    m_tabSymbol = QStringLiteral("→");
+    m_spaceSymbol = QStringLiteral("·");
+    m_changeTabToSpaces = false;
 }
 
 QssTextEditor::~QssTextEditor() { qDebug() << "Destructor"; }
@@ -124,8 +128,11 @@ void QssTextEditor::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Tab)
     {
-        insertPlainText("    ");
-        return;
+        if (m_changeTabToSpaces)
+        {
+            insertPlainText("    ");
+            return;
+        }
     }
     QPlainTextEdit::keyPressEvent(event);
 }

@@ -30,6 +30,9 @@ private:
     QWidget *lineNumberArea;
     QWidget *colorPreviewArea;
     SyntaxHighlighter *highlighter;
+    QString m_tabSymbol;
+    QString m_spaceSymbol;
+    bool m_changeTabToSpaces;
 
     void drawColorPreview(QPainter &painter, const QString &text,
                           int yPosition);
